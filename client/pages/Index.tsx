@@ -72,66 +72,112 @@ export default function Index() {
             Personal Bests
           </h2>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
+            {/* Field Goal */}
             <Card className="border border-border shadow-sm">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <Target className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-foreground">
-                        Field Goal Foot Speed
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Personal best
-                      </p>
-                    </div>
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Target className="w-5 h-5 text-primary" />
                   </div>
-                  <p className="text-xl font-bold text-foreground">72 mph</p>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">
+                      Field Goal
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Personal bests
+                    </p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <p className="text-lg font-bold text-foreground">72</p>
+                    <p className="text-xs text-muted-foreground">Speed (mph)</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-bold text-foreground">18.5</p>
+                    <p className="text-xs text-muted-foreground">
+                      Linear ROM (in)
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-bold text-foreground">145</p>
+                    <p className="text-xs text-muted-foreground">
+                      Angular ROM (°)
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
+            {/* Punt */}
             <Card className="border border-border shadow-sm">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
-                      <TrendingUp className="w-5 h-5 text-secondary" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-foreground">
-                        Punt Foot Speed
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Personal best
-                      </p>
-                    </div>
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-secondary" />
                   </div>
-                  <p className="text-xl font-bold text-foreground">68 mph</p>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Punt</p>
+                    <p className="text-xs text-muted-foreground">
+                      Personal bests
+                    </p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <p className="text-lg font-bold text-foreground">69</p>
+                    <p className="text-xs text-muted-foreground">Speed (mph)</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-bold text-foreground">22.3</p>
+                    <p className="text-xs text-muted-foreground">
+                      Linear ROM (in)
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-bold text-foreground">162</p>
+                    <p className="text-xs text-muted-foreground">
+                      Angular ROM (°)
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
+            {/* Kickoff */}
             <Card className="border border-border shadow-sm">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
-                      <Activity className="w-5 h-5 text-accent" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-foreground">
-                        Kickoff Foot Speed
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Personal best
-                      </p>
-                    </div>
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+                    <Activity className="w-5 h-5 text-accent" />
                   </div>
-                  <p className="text-xl font-bold text-foreground">75 mph</p>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">
+                      Kickoff
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Personal bests
+                    </p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <p className="text-lg font-bold text-foreground">75</p>
+                    <p className="text-xs text-muted-foreground">Speed (mph)</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-bold text-foreground">16.8</p>
+                    <p className="text-xs text-muted-foreground">
+                      Linear ROM (in)
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-bold text-foreground">138</p>
+                    <p className="text-xs text-muted-foreground">
+                      Angular ROM (°)
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>

@@ -17,10 +17,10 @@ export default function History() {
       time: "2:30 PM",
       duration: "32 min",
       kicks: 45,
-      accuracy: 92,
       peakSpeed: 72,
       ballSpeed: 68,
-      contactAngle: 23,
+      curvedLinearROM: 18.5,
+      angularROM: 145,
       kickType: "field-goal" as const,
     },
     {
@@ -29,10 +29,10 @@ export default function History() {
       time: "11:15 AM",
       duration: "28 min",
       kicks: 38,
-      accuracy: 87,
       peakSpeed: 69,
       ballSpeed: 65,
-      contactAngle: 21,
+      curvedLinearROM: 22.3,
+      angularROM: 162,
       kickType: "punt" as const,
     },
     {
@@ -41,10 +41,10 @@ export default function History() {
       time: "4:45 PM",
       duration: "35 min",
       kicks: 52,
-      accuracy: 89,
       peakSpeed: 74,
       ballSpeed: 71,
-      contactAngle: 19,
+      curvedLinearROM: 16.8,
+      angularROM: 138,
       kickType: "kickoff" as const,
     },
   ];
@@ -157,6 +157,14 @@ export default function History() {
                         {session.peakSpeed} mph
                       </span>
                     </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        Curved Linear ROM
+                      </span>
+                      <span className="text-sm font-medium text-foreground">
+                        {session.curvedLinearROM} in
+                      </span>
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -165,6 +173,14 @@ export default function History() {
                       </span>
                       <span className="text-sm font-medium text-foreground">
                         {session.ballSpeed} mph
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        Angular ROM
+                      </span>
+                      <span className="text-sm font-medium text-foreground">
+                        {session.angularROM}°
                       </span>
                     </div>
                   </div>
