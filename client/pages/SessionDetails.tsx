@@ -32,53 +32,68 @@ export default function SessionDetails() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [set, setSet] = useState<SetData | null>(null);
+  const [peakData, setPeakData] = useState<PeakPerformanceData[]>([]);
+  const [rawData, setRawData] = useState<RawSensorData[]>([]);
+  const [loading, setLoading] = useState(true);
   // App operates in Imperial units only
 
-  // Mock set data - in real app, this would be fetched based on sessionId
-  const set: SetData = {
-    id: Number(sessionId) || 1,
-    date: "Dec 15, 2024",
-    time: "2:30 PM",
-    duration: "32 min",
-    kicks: 45,
-    peakSpeed: 72,
-    footSpeed: 68,
-    curvedLinearROM: 18.5,
-    angularROM: 145,
-    kickType: "field-goal",
-    hasVideo: true,
-    videoSize: "1.2 GB",
-  };
+  useEffect(() => {
+    const loadSetData = async () => {
+      if (!sessionId) return;
 
-  // Mock data for demonstration
-  const peakFootSpeedData = [
-    { timestamp: "00:02", value: 68, rom: 18.2, angle: 142 },
-    { timestamp: "00:15", value: 71, rom: 19.1, angle: 145 },
-    {
-      timestamp: "00:28",
-      value: set.peakSpeed,
-      rom: set.curvedLinearROM,
-      angle: set.angularROM,
-    },
-    { timestamp: "00:45", value: 67, rom: 17.8, angle: 139 },
-    { timestamp: "01:02", value: 69, rom: 18.7, angle: 143 },
-  ];
+      try {
+        const setId = Number(sessionId);
+        const [setData, peakPerformanceData, rawSensorData] = await Promise.all(
+          [
+            DataService.getSetById(setId),
+            DataService.getPeakPerformanceData(setId),
+            DataService.getRawSensorData(setId),
+          ],
+        );
 
-  const rawDataSample = [
-    { time: "00:00.000", ax: 0.2, ay: -0.1, az: 9.8, gx: 12, gy: -5, gz: 8 },
-    { time: "00:00.100", ax: 0.3, ay: -0.2, az: 9.9, gx: 15, gy: -8, gz: 12 },
-    { time: "00:00.200", ax: 1.2, ay: 2.1, az: 11.2, gx: 45, gy: 32, gz: -18 },
-    { time: "00:00.300", ax: 4.5, ay: 8.2, az: 15.6, gx: 156, gy: 89, gz: -65 },
-    {
-      time: "00:00.400",
-      ax: 12.8,
-      ay: 15.4,
-      az: 22.1,
-      gx: 287,
-      gy: 145,
-      gz: -123,
-    },
-  ];
+        setSet(setData);
+        setPeakData(peakPerformanceData);
+        setRawData(rawSensorData);
+      } catch (error) {
+        console.error("Failed to load set data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSetData();
+  }, [sessionId]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading set details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!set) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-foreground mb-4">
+            Set Not Found
+          </h1>
+          <p className="text-muted-foreground mb-4">
+            The requested set could not be found.
+          </p>
+          <Button onClick={() => navigate("/history")}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to History
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const getKickTypeIcon = () => {
     switch (set.kickType) {
