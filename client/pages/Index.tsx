@@ -93,20 +93,15 @@ export default function Index() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">
-                      {formatSpeed(72, isMetric).split(" ")[0]}
-                    </p>
+                    <p className="text-lg font-bold text-foreground">72.0</p>
                     <p className="text-xs text-muted-foreground">
-                      Foot Speed ({formatSpeed(72, isMetric).split(" ")[1]})
+                      Foot Speed (mph)
                     </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">
-                      {formatDistance(18.5, isMetric).split(" ")[0]}
-                    </p>
+                    <p className="text-lg font-bold text-foreground">18.5</p>
                     <p className="text-xs text-muted-foreground">
-                      Linear ROM ({formatDistance(18.5, isMetric).split(" ")[1]}
-                      )
+                      Linear ROM (in)
                     </p>
                   </div>
                   <div className="text-center">
@@ -135,20 +130,15 @@ export default function Index() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">
-                      {formatSpeed(69, isMetric).split(" ")[0]}
-                    </p>
+                    <p className="text-lg font-bold text-foreground">69.0</p>
                     <p className="text-xs text-muted-foreground">
-                      Foot Speed ({formatSpeed(69, isMetric).split(" ")[1]})
+                      Foot Speed (mph)
                     </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">
-                      {formatDistance(22.3, isMetric).split(" ")[0]}
-                    </p>
+                    <p className="text-lg font-bold text-foreground">22.3</p>
                     <p className="text-xs text-muted-foreground">
-                      Linear ROM ({formatDistance(22.3, isMetric).split(" ")[1]}
-                      )
+                      Linear ROM (in)
                     </p>
                   </div>
                   <div className="text-center">
@@ -179,20 +169,15 @@ export default function Index() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">
-                      {formatSpeed(75, isMetric).split(" ")[0]}
-                    </p>
+                    <p className="text-lg font-bold text-foreground">75.0</p>
                     <p className="text-xs text-muted-foreground">
-                      Foot Speed ({formatSpeed(75, isMetric).split(" ")[1]})
+                      Foot Speed (mph)
                     </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">
-                      {formatDistance(16.8, isMetric).split(" ")[0]}
-                    </p>
+                    <p className="text-lg font-bold text-foreground">16.8</p>
                     <p className="text-xs text-muted-foreground">
-                      Linear ROM ({formatDistance(16.8, isMetric).split(" ")[1]}
-                      )
+                      Linear ROM (in)
                     </p>
                   </div>
                   <div className="text-center">
