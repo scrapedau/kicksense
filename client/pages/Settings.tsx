@@ -124,7 +124,7 @@ export default function Settings() {
           </CardHeader>
           <CardContent className="space-y-3">
             <Button variant="outline" className="w-full justify-start">
-              Export Session Data
+              Export Set Data
             </Button>
             <Button variant="outline" className="w-full justify-start">
               Calibrate Sensor
