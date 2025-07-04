@@ -21,7 +21,6 @@ interface SensorData {
   acceleration: { x: number; y: number; z: number };
   gyroscope: { x: number; y: number; z: number };
   footSpeed: number;
-  ballSpeed?: number;
   contactAngle?: number;
 }
 
