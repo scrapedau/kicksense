@@ -158,9 +158,7 @@ export default function SessionDetails() {
               className={`grid w-full ${session.hasVideo ? "grid-cols-4" : "grid-cols-3"}`}
             >
               <TabsTrigger value="overview">Overview</TabsTrigger>
-              {session.hasVideo && (
-                <TabsTrigger value="video">Video</TabsTrigger>
-              )}
+              {set.hasVideo && <TabsTrigger value="video">Video</TabsTrigger>}
               <TabsTrigger value="data">Data</TabsTrigger>
               <TabsTrigger value="visualizer">3D</TabsTrigger>
             </TabsList>
@@ -169,25 +167,25 @@ export default function SessionDetails() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
                   <p className="text-2xl font-bold text-foreground">
-                    {session.kicks}
+                    {set.kicks}
                   </p>
                   <p className="text-sm text-muted-foreground">Total Kicks</p>
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-bold text-foreground">
-                    {session.duration}
+                    {set.duration}
                   </p>
                   <p className="text-sm text-muted-foreground">Duration</p>
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-bold text-foreground">
-                    {session.peakSpeed.toFixed(1)} mph
+                    {set.peakSpeed.toFixed(1)} mph
                   </p>
                   <p className="text-sm text-muted-foreground">Peak Speed</p>
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-bold text-foreground">
-                    {session.curvedLinearROM.toFixed(1)} in
+                    {set.curvedLinearROM.toFixed(1)} in
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Max Linear ROM
