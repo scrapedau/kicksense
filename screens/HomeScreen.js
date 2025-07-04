@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,27 +10,32 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { DataService } from "../data/dataService";
 
 const HomeScreen = ({ navigation }) => {
   const [showKickTypeModal, setShowKickTypeModal] = useState(false);
+  const [personalBests, setPersonalBests] = useState(null);
+  const [recentSets, setRecentSets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const personalBests = {
-    "field-goal": {
-      footSpeed: 78.2,
-      linearROM: 22.4,
-      angularROM: 156,
-    },
-    punt: {
-      footSpeed: 82.1,
-      linearROM: 24.8,
-      angularROM: 162,
-    },
-    kickoff: {
-      footSpeed: 85.3,
-      linearROM: 26.1,
-      angularROM: 168,
-    },
-  };
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [bests, recent] = await Promise.all([
+          DataService.getPersonalBests(),
+          DataService.getRecentSets(),
+        ]);
+        setPersonalBests(bests);
+        setRecentSets(recent);
+      } catch (error) {
+        console.error("Failed to load data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const kickTypes = [
     {
@@ -61,6 +66,16 @@ const HomeScreen = ({ navigation }) => {
     setShowKickTypeModal(false);
     navigation.navigate("LiveData", { kickType });
   };
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -109,19 +124,23 @@ const HomeScreen = ({ navigation }) => {
                 <View style={styles.statItem}>
                   <Text style={styles.statLabel}>Foot Speed</Text>
                   <Text style={styles.statValue}>
-                    {personalBests[kickType.id].footSpeed.toFixed(1)} mph
+                    {personalBests?.[kickType.id]?.footSpeed.toFixed(1) ||
+                      "0.0"}{" "}
+                    mph
                   </Text>
                 </View>
                 <View style={styles.statItem}>
                   <Text style={styles.statLabel}>Linear ROM</Text>
                   <Text style={styles.statValue}>
-                    {personalBests[kickType.id].linearROM.toFixed(1)} in
+                    {personalBests?.[kickType.id]?.linearROM.toFixed(1) ||
+                      "0.0"}{" "}
+                    in
                   </Text>
                 </View>
                 <View style={styles.statItem}>
                   <Text style={styles.statLabel}>Angular ROM</Text>
                   <Text style={styles.statValue}>
-                    {personalBests[kickType.id].angularROM}°
+                    {personalBests?.[kickType.id]?.angularROM || "0"}°
                   </Text>
                 </View>
               </View>
@@ -133,13 +152,21 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Set History</Text>
           <View style={styles.historyCard}>
-            <View style={styles.historyItem}>
-              <Text style={styles.historyDate}>Dec 15, 2024</Text>
-              <Text style={styles.historyDetails}>45 kicks • 32 min</Text>
-            </View>
-            <View style={styles.historyStats}>
-              <Text style={styles.historySpeed}>72.1 mph peak</Text>
-            </View>
+            {recentSets.map((set) => (
+              <View key={set.id} style={styles.historyItem}>
+                <View>
+                  <Text style={styles.historyDate}>{set.date}</Text>
+                  <Text style={styles.historyDetails}>
+                    {set.kicks} kicks • {set.duration}
+                  </Text>
+                </View>
+                <View style={styles.historyStats}>
+                  <Text style={styles.historySpeed}>
+                    {set.peakSpeed.toFixed(1)} mph peak
+                  </Text>
+                </View>
+              </View>
+            ))}
           </View>
 
           <TouchableOpacity
@@ -197,6 +224,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F2EFE9",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    fontSize: 16,
+    color: "#BEB8A7",
   },
   scrollView: {
     flex: 1,
@@ -304,7 +340,10 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   historyItem: {
-    marginBottom: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 8,
   },
   historyDate: {
     fontSize: 14,
@@ -316,7 +355,7 @@ const styles = StyleSheet.create({
     color: "#BEB8A7",
   },
   historyStats: {
-    alignItems: "flex-start",
+    alignItems: "flex-end",
   },
   historySpeed: {
     fontSize: 12,
