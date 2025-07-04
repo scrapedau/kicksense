@@ -273,20 +273,7 @@ export default function Index() {
                     <p className="text-xs text-muted-foreground">Peak speed</p>
                   </div>
                 </div>
-              ))}
-                <div>
-                  <p className="text-sm font-medium text-foreground">
-                    Dec 10, 2024
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    52 kicks • 35 min
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-medium text-secondary">74 mph</p>
-                  <p className="text-xs text-muted-foreground">Peak speed</p>
-                </div>
-              })
+              })}
             </CardContent>
           </Card>
         </div>
