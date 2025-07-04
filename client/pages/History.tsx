@@ -149,13 +149,11 @@ export default function History() {
           </Card>
         </div>
 
-        {/* Session List */}
+        {/* Set List */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">
-            Recent Sessions
-          </h2>
+          <h2 className="text-lg font-semibold text-foreground">Recent Sets</h2>
 
-          {sessions.map((session) => (
+          {sets.map((set) => (
             <Card key={session.id} className="border border-border shadow-sm">
               <CardContent className="p-4">
                 <div className="flex items-start justify-between mb-3">
