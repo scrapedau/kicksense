@@ -45,7 +45,7 @@ export default function Settings() {
                 </div>
                 <div>
                   <CardTitle className="text-base">Sensor Connection</CardTitle>
-                  <CardDescription>KickSense Pro v2.1</CardDescription>
+                  <CardDescription>MetaMotionRL</CardDescription>
                 </div>
               </div>
               <Badge
