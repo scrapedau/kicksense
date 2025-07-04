@@ -262,7 +262,7 @@ export default function History() {
                     variant="outline"
                     size="sm"
                     className="w-full"
-                    onClick={() => navigate(`/session/${session.id}`)}
+                    onClick={() => navigate(`/session/${set.id}`)}
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     View
@@ -272,7 +272,7 @@ export default function History() {
                       <Download className="w-4 h-4 mr-2" />
                       Export Data
                     </Button>
-                    {session.hasVideo && (
+                    {set.hasVideo && (
                       <Button
                         variant="default"
                         size="sm"
