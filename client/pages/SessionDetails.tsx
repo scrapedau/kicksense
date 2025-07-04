@@ -154,13 +154,13 @@ export default function SessionDetails() {
         {/* Content */}
         <div className="pb-20">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               {session.hasVideo && (
                 <TabsTrigger value="video">Video</TabsTrigger>
               )}
-              <TabsTrigger value="peaks">Peak Data</TabsTrigger>
-              <TabsTrigger value="raw">Raw Data</TabsTrigger>
+              <TabsTrigger value="data">Data</TabsTrigger>
+              <TabsTrigger value="visualizer">3D Visualizer</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="mt-6 space-y-6">
