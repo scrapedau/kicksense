@@ -175,19 +175,25 @@ export default function Index() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">69.0</p>
+                    <p className="text-lg font-bold text-foreground">
+                      {personalBests?.punt.footSpeed.toFixed(1) || "0.0"}
+                    </p>
                     <p className="text-xs text-muted-foreground">
                       Foot Speed (mph)
                     </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">22.3</p>
+                    <p className="text-lg font-bold text-foreground">
+                      {personalBests?.punt.linearROM.toFixed(1) || "0.0"}
+                    </p>
                     <p className="text-xs text-muted-foreground">
                       Linear ROM (in)
                     </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">162</p>
+                    <p className="text-lg font-bold text-foreground">
+                      {personalBests?.punt.angularROM || "0"}
+                    </p>
                     <p className="text-xs text-muted-foreground">
                       Angular ROM (°)
                     </p>
