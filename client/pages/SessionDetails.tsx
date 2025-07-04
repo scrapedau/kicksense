@@ -69,9 +69,9 @@ export default function SessionDetails() {
     { timestamp: "00:15", value: 71, rom: 19.1, angle: 145 },
     {
       timestamp: "00:28",
-      value: session.peakSpeed,
-      rom: session.curvedLinearROM,
-      angle: session.angularROM,
+      value: set.peakSpeed,
+      rom: set.curvedLinearROM,
+      angle: set.angularROM,
     },
     { timestamp: "00:45", value: 67, rom: 17.8, angle: 139 },
     { timestamp: "01:02", value: 69, rom: 18.7, angle: 143 },
