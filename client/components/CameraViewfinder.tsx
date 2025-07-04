@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Video, VideoOff, Circle } from "lucide-react";
+import { Video, VideoOff, Circle, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface CameraViewfinderProps {
   isRecording: boolean;
@@ -16,6 +17,7 @@ export default function CameraViewfinder({
   const [isVideoRecording, setIsVideoRecording] = useState(false);
   const [hasPermission, setHasPermission] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const navigate = useNavigate();
 
   // Request camera permission and start preview
   useEffect(() => {
@@ -55,9 +57,18 @@ export default function CameraViewfinder({
 
   return (
     <div className="absolute inset-0 bg-black">
+      {/* Back button */}
+      <button
+        onClick={() => navigate("/")}
+        className="absolute top-4 left-4 z-30 w-10 h-10 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/60 transition-colors"
+        aria-label="Back to home"
+      >
+        <ArrowLeft className="w-5 h-5" />
+      </button>
+
       {/* Recording indicator overlay */}
       {isVideoRecording && (
-        <div className="absolute top-4 left-4 bg-destructive/90 text-destructive-foreground px-3 py-1 rounded-full text-xs font-medium z-20">
+        <div className="absolute top-4 right-4 bg-destructive/90 text-destructive-foreground px-3 py-1 rounded-full text-xs font-medium z-20">
           <Circle className="w-2 h-2 fill-current mr-1 animate-pulse inline" />
           REC
         </div>
