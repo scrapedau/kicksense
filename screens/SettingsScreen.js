@@ -61,7 +61,7 @@ const SettingsScreen = () => {
         {
           icon: "download",
           label: "Export Set Data",
-          subtitle: "Export all recorded sessions as CSV",
+          subtitle: "Export all recorded sets as CSV",
           type: "action",
         },
         {
@@ -73,7 +73,7 @@ const SettingsScreen = () => {
         {
           icon: "trash",
           label: "Clear All Data",
-          subtitle: "Delete all recorded sessions",
+          subtitle: "Delete all recorded sets",
           type: "action",
           destructive: true,
         },
