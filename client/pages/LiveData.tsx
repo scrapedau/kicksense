@@ -13,7 +13,7 @@ import { Chart } from "@/components/ui/chart";
 import { Play, Pause, Square, Zap, Gauge, Camera, Video } from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
 import CameraViewfinder from "@/components/CameraViewfinder";
-import CompactDataDisplay from "@/components/CompactDataDisplay";
+import RawDataDisplay from "@/components/RawDataDisplay";
 import { cn } from "@/lib/utils";
 
 interface SensorData {
@@ -122,71 +122,51 @@ export default function LiveData() {
   }));
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <div className={cn("pt-8 pb-6", isVideoMode ? "px-4" : "px-6")}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Live Data</h1>
-            <p className="text-muted-foreground flex items-center">
-              {isVideoMode && <Video className="w-4 h-4 mr-1" />}
-              {isVideoMode ? "Video + Sensor Recording" : "Sensor Recording"}
-            </p>
+    <div className={cn("min-h-screen", isVideoMode ? "bg-black" : "bg-background pb-20")}>
+      {!isVideoMode && (
+        <div className="px-6 pt-8 pb-6">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Live Data</h1>
+              <p className="text-muted-foreground flex items-center">
+                Sensor Recording
+              </p>
+            </div>
+            <Badge
+              variant={isRecording ? "default" : "secondary"}
+              className={
+                isRecording
+                  ? "bg-destructive text-destructive-foreground animate-pulse"
+                  : ""
+              }
+            >
+              {isRecording ? "Recording" : "Stopped"}
+            </Badge>
           </div>
-          <Badge
-            variant={isRecording ? "default" : "secondary"}
-            className={
-              isRecording
-                ? "bg-destructive text-destructive-foreground animate-pulse"
-                : ""
-            }
-          >
-            {isRecording ? "Recording" : "Stopped"}
-          </Badge>
         </div>
+      )}
 
-        {/* Mobile-First Layout for Video Mode */}
+        {/* Mobile Camera Layout for Video Mode */}
         {isVideoMode ? (
-          <div className="flex flex-col h-[calc(100vh-180px)]">
-            {/* Camera Half - Top */}
-            <div className="h-1/2 mb-4">
+          <div className="fixed inset-0 flex flex-col bg-black">
+            {/* Full-Bleed Camera Half - Top */}
+            <div className="h-1/2 relative">
               <CameraViewfinder
                 isRecording={isRecording}
                 onRecordingChange={setIsRecording}
               />
             </div>
 
-            {/* Compact Data Half - Bottom */}
-            <div className="space-y-3">
-              {/* Recording Controls */}
-              <div className="flex items-center justify-center space-x-4 mb-4">
-                <Button
-                  onClick={handleStartStop}
-                  size="lg"
-                  variant={isRecording ? "destructive" : "default"}
-                  className="px-8"
-                >
-                  {isRecording ? (
-                    <>
-                      <Square className="w-4 h-4 mr-2" />
-                      Stop
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-4 h-4 mr-2" />
-                      Start
-                    </>
-                  )}
-                </Button>
-              </div>
-
-              {/* Compact Raw Data Display */}
-              <CompactDataDisplay
+            {/* Data Half - Bottom */}
+            <div className="h-1/2 bg-background flex flex-col">
+              <RawDataDisplay
                 currentFootSpeed={currentFootSpeed}
                 peakFootSpeed={peakFootSpeed}
                 accelerationPeaks={accelerationPeaks}
                 sessionDuration={sessionDuration}
                 isRecording={isRecording}
+                onStartStop={handleStartStop}
               />
             </div>
           </div>
@@ -321,10 +301,10 @@ export default function LiveData() {
               </CardContent>
             </Card>
           </div>
+          </div>
         )}
-      </div>
 
-      <BottomNavigation />
+      {!isVideoMode && <BottomNavigation />}
     </div>
   );
 }
