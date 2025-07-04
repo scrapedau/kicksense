@@ -28,9 +28,7 @@ import { cn } from "@/lib/utils";
 
 export default function History() {
   const [isMetric, setIsMetric] = useState(false); // TODO: Get from user preferences
-  const [selectedSession, setSelectedSession] = useState<
-    (typeof sessions)[0] | null
-  >(null);
+  const navigate = useNavigate();
 
   const sessions = [
     {
