@@ -62,7 +62,7 @@ export default function Index() {
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
               >
                 <Activity className="w-5 h-5 mr-2" />
-                Start Session
+                Start Set
               </Button>
             </CardContent>
           </Card>
