@@ -155,7 +155,7 @@ export default function SessionDetails() {
         <div className="pb-20">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList
-              className={`grid w-full ${session.hasVideo ? "grid-cols-4" : "grid-cols-3"}`}
+              className={`grid w-full ${set.hasVideo ? "grid-cols-4" : "grid-cols-3"}`}
             >
               <TabsTrigger value="overview">Overview</TabsTrigger>
               {set.hasVideo && <TabsTrigger value="video">Video</TabsTrigger>}
