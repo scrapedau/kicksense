@@ -77,9 +77,7 @@ export default function BluetoothIndicator({
           )}
           {getStatusText()}
         </Badge>
-        <span className="text-xs text-muted-foreground mt-1">
-          KickSense Pro
-        </span>
+        <span className="text-xs text-muted-foreground mt-1">MetaMotionRL</span>
       </div>
     </div>
   );
