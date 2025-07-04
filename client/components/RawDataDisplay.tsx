@@ -32,38 +32,43 @@ export default function RawDataDisplay({
   isRecording,
   onStartStop,
 }: RawDataDisplayProps) {
-  const [accelerationEvents, setAccelerationEvents] = useState<AccelerationEvent[]>([]);
+  const [accelerationEvents, setAccelerationEvents] = useState<
+    AccelerationEvent[]
+  >([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // Generate new acceleration events when recording
   useEffect(() => {
     if (!isRecording) return;
 
-    const interval = setInterval(() => {
-      // Simulate acceleration spike detection
-      const x = (Math.random() - 0.5) * 40;
-      const y = (Math.random() - 0.5) * 40; 
-      const z = 9.8 + (Math.random() - 0.5) * 20;
-      const magnitude = Math.sqrt(x * x + y * y + z * z);
+    const interval = setInterval(
+      () => {
+        // Simulate acceleration spike detection
+        const x = (Math.random() - 0.5) * 40;
+        const y = (Math.random() - 0.5) * 40;
+        const z = 9.8 + (Math.random() - 0.5) * 20;
+        const magnitude = Math.sqrt(x * x + y * y + z * z);
 
-      // Only add significant acceleration events (threshold)
-      if (magnitude > 15) {
-        const newEvent: AccelerationEvent = {
-          id: Date.now().toString(),
-          timestamp: Date.now(),
-          x: x,
-          y: y,
-          z: z,
-          magnitude: magnitude,
-        };
+        // Only add significant acceleration events (threshold)
+        if (magnitude > 15) {
+          const newEvent: AccelerationEvent = {
+            id: Date.now().toString(),
+            timestamp: Date.now(),
+            x: x,
+            y: y,
+            z: z,
+            magnitude: magnitude,
+          };
 
-        setAccelerationEvents(prev => {
-          const updated = [newEvent, ...prev];
-          // Keep only last 50 events for performance
-          return updated.slice(0, 50);
-        });
-      }
-    }, 500 + Math.random() * 1000); // Random intervals
+          setAccelerationEvents((prev) => {
+            const updated = [newEvent, ...prev];
+            // Keep only last 50 events for performance
+            return updated.slice(0, 50);
+          });
+        }
+      },
+      500 + Math.random() * 1000,
+    ); // Random intervals
 
     return () => clearInterval(interval);
   }, [isRecording]);
@@ -90,11 +95,11 @@ export default function RawDataDisplay({
 
   const formatTimestamp = (timestamp: number) => {
     const date = new Date(timestamp);
-    return date.toLocaleTimeString([], { 
-      hour12: false, 
-      minute: '2-digit', 
-      second: '2-digit',
-      fractionalSecondDigits: 1 
+    return date.toLocaleTimeString([], {
+      hour12: false,
+      minute: "2-digit",
+      second: "2-digit",
+      fractionalSecondDigits: 1,
     });
   };
 
@@ -138,22 +143,25 @@ export default function RawDataDisplay({
           Live Acceleration Events
         </h3>
         <div className="text-xs text-muted-foreground mb-2">
-          Peak events (magnitude > 15 m/s²)
+          Peak events (magnitude &gt; 15 m/s&sup2;)
         </div>
       </div>
 
       {/* Scrolling Events List */}
-      <div 
+      <div
         ref={scrollRef}
         className="flex-1 overflow-y-auto space-y-2 relative"
         style={{
-          maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+          maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 80%, transparent 100%)",
         }}
       >
         {accelerationEvents.length === 0 ? (
           <div className="text-center text-muted-foreground text-sm py-8">
-            {isRecording ? "Waiting for acceleration events..." : "Start recording to see acceleration data"}
+            {isRecording
+              ? "Waiting for acceleration events..."
+              : "Start recording to see acceleration data"}
           </div>
         ) : (
           accelerationEvents.map((event, index) => (
@@ -161,10 +169,10 @@ export default function RawDataDisplay({
               key={event.id}
               className={cn(
                 "p-3 bg-muted/30 rounded-lg border border-border/50 transition-all duration-500",
-                index === 0 && "bg-primary/5 border-primary/20"
+                index === 0 && "bg-primary/5 border-primary/20",
               )}
               style={{
-                opacity: Math.max(0.3, 1 - (index * 0.1))
+                opacity: Math.max(0.3, 1 - index * 0.1),
               }}
             >
               <div className="flex justify-between items-start mb-2">
@@ -172,10 +180,10 @@ export default function RawDataDisplay({
                   {formatTimestamp(event.timestamp)}
                 </div>
                 <div className="text-sm font-bold text-foreground">
-                  {event.magnitude.toFixed(1)} m/s²
+                  {event.magnitude.toFixed(1)} m/s&sup2;
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-3 gap-2 text-xs">
                 <div className="text-center">
                   <div className="text-primary font-medium">X</div>
