@@ -16,6 +16,8 @@ import {
   Calendar,
   Clock,
   Zap,
+  Target,
+  ArrowUp,
 } from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
 
@@ -28,6 +30,7 @@ interface Session {
   peakSpeed: number;
   hasVideo: boolean;
   videoSize?: string;
+  kickType: "punt" | "kickoff" | "field-goal";
 }
 
 export default function Share() {
@@ -41,6 +44,7 @@ export default function Share() {
       peakSpeed: 72,
       hasVideo: true,
       videoSize: "1.2 GB",
+      kickType: "field-goal",
     },
     {
       id: "2",
@@ -50,6 +54,7 @@ export default function Share() {
       kicks: 38,
       peakSpeed: 69,
       hasVideo: false,
+      kickType: "punt",
     },
     {
       id: "3",
@@ -60,6 +65,7 @@ export default function Share() {
       peakSpeed: 74,
       hasVideo: true,
       videoSize: "1.8 GB",
+      kickType: "kickoff",
     },
     {
       id: "4",
@@ -69,6 +75,7 @@ export default function Share() {
       kicks: 29,
       peakSpeed: 66,
       hasVideo: false,
+      kickType: "field-goal",
     },
     {
       id: "5",
@@ -79,6 +86,7 @@ export default function Share() {
       peakSpeed: 70,
       hasVideo: true,
       videoSize: "1.5 GB",
+      kickType: "punt",
     },
   ];
 
@@ -147,6 +155,28 @@ export default function Share() {
                       <h3 className="text-sm font-medium text-foreground">
                         {session.date}
                       </h3>
+                      <Badge
+                        variant="outline"
+                        className={
+                          session.kickType === "field-goal"
+                            ? "bg-primary/10 text-primary border-primary/30"
+                            : session.kickType === "punt"
+                              ? "bg-secondary/10 text-secondary border-secondary/30"
+                              : "bg-accent/10 text-accent border-accent/30"
+                        }
+                      >
+                        {session.kickType === "field-goal" && (
+                          <Target className="w-3 h-3 mr-1" />
+                        )}
+                        {session.kickType === "punt" && (
+                          <ArrowUp className="w-3 h-3 mr-1" />
+                        )}
+                        {session.kickType === "kickoff" && (
+                          <Zap className="w-3 h-3 mr-1" />
+                        )}
+                        {session.kickType.charAt(0).toUpperCase() +
+                          session.kickType.slice(1).replace("-", " ")}
+                      </Badge>
                       <Badge
                         variant={session.hasVideo ? "default" : "secondary"}
                         className={

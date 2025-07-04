@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CalendarDays, TrendingUp, Target, Zap } from "lucide-react";
+import { CalendarDays, TrendingUp, Target, Zap, ArrowUp } from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
 
 export default function History() {
@@ -21,6 +21,7 @@ export default function History() {
       peakSpeed: 72,
       ballSpeed: 68,
       contactAngle: 23,
+      kickType: "field-goal" as const,
     },
     {
       id: 2,
@@ -32,6 +33,7 @@ export default function History() {
       peakSpeed: 69,
       ballSpeed: 65,
       contactAngle: 21,
+      kickType: "punt" as const,
     },
     {
       id: 3,
@@ -43,6 +45,7 @@ export default function History() {
       peakSpeed: 74,
       ballSpeed: 71,
       contactAngle: 19,
+      kickType: "kickoff" as const,
     },
   ];
 
@@ -103,9 +106,33 @@ export default function History() {
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-base text-foreground">
-                      {session.date}
-                    </CardTitle>
+                    <div className="flex items-center space-x-2 mb-1">
+                      <CardTitle className="text-base text-foreground">
+                        {session.date}
+                      </CardTitle>
+                      <Badge
+                        variant="outline"
+                        className={
+                          session.kickType === "field-goal"
+                            ? "bg-primary/10 text-primary border-primary/30"
+                            : session.kickType === "punt"
+                              ? "bg-secondary/10 text-secondary border-secondary/30"
+                              : "bg-accent/10 text-accent border-accent/30"
+                        }
+                      >
+                        {session.kickType === "field-goal" && (
+                          <Target className="w-3 h-3 mr-1" />
+                        )}
+                        {session.kickType === "punt" && (
+                          <ArrowUp className="w-3 h-3 mr-1" />
+                        )}
+                        {session.kickType === "kickoff" && (
+                          <Zap className="w-3 h-3 mr-1" />
+                        )}
+                        {session.kickType.charAt(0).toUpperCase() +
+                          session.kickType.slice(1).replace("-", " ")}
+                      </Badge>
+                    </div>
                     <CardDescription>
                       {session.time} • {session.duration}
                     </CardDescription>

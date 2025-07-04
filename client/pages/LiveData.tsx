@@ -135,7 +135,9 @@ export default function LiveData() {
             <div>
               <h1 className="text-2xl font-bold text-foreground">Live Data</h1>
               <p className="text-muted-foreground flex items-center">
-                Sensor Recording
+                {kickType.charAt(0).toUpperCase() +
+                  kickType.slice(1).replace("-", " ")}{" "}
+                Recording
               </p>
             </div>
             <Badge

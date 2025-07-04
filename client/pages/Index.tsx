@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,11 +9,21 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Activity, Video, VideoOff, Target, TrendingUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BluetoothIndicator from "@/components/BluetoothIndicator";
+import KickTypeSelector, { KickType } from "@/components/KickTypeSelector";
 
 export default function Index() {
+  const [showKickTypeSelector, setShowKickTypeSelector] = useState(false);
+  const navigate = useNavigate();
+
+  const handleKickTypeSelect = (kickType: KickType, withVideo: boolean) => {
+    setShowKickTypeSelector(false);
+    // Navigate to live data with kick type and video parameters
+    navigate(`/live?video=${withVideo}&kickType=${kickType}`);
+  };
+
   return (
     <div className="min-h-screen bg-background pb-20">
       <div className="relative overflow-hidden">
@@ -42,26 +53,15 @@ export default function Index() {
                 Ready to analyze your kicking performance?
               </CardDescription>
             </CardHeader>
-            <CardContent className="text-center space-y-4">
-              <Link to="/live?video=true">
-                <Button
-                  size="lg"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold mb-5 sm:mb-0"
-                >
-                  <Video className="w-5 h-5 mr-2" />
-                  Record Data with Video
-                </Button>
-              </Link>
-              <Link to="/live?video=false">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full border-secondary text-secondary hover:bg-secondary/10 font-semibold"
-                >
-                  <VideoOff className="w-5 h-5 mr-2" />
-                  Record Data without Video
-                </Button>
-              </Link>
+            <CardContent className="text-center">
+              <Button
+                onClick={() => setShowKickTypeSelector(true)}
+                size="lg"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+              >
+                <Activity className="w-5 h-5 mr-2" />
+                Start Session
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -223,6 +223,13 @@ export default function Index() {
           </Card>
         </div>
       </div>
+
+      {showKickTypeSelector && (
+        <KickTypeSelector
+          onSelect={handleKickTypeSelect}
+          onCancel={() => setShowKickTypeSelector(false)}
+        />
+      )}
 
       <BottomNavigation />
     </div>
