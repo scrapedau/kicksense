@@ -47,8 +47,8 @@ export default function SessionDetails() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   // App operates in Imperial units only
 
-  // Mock session data - in real app, this would be fetched based on sessionId
-  const session: SessionData = {
+  // Mock set data - in real app, this would be fetched based on sessionId
+  const set: SetData = {
     id: Number(sessionId) || 1,
     date: "Dec 15, 2024",
     time: "2:30 PM",
