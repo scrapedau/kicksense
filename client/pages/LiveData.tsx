@@ -85,7 +85,7 @@ export default function LiveData() {
 
     const startTime = Date.now();
     const timer = setInterval(() => {
-      setSessionDuration(Math.floor((Date.now() - startTime) / 1000));
+      setSetDuration(Math.floor((Date.now() - startTime) / 1000));
     }, 1000);
 
     return () => clearInterval(timer);
