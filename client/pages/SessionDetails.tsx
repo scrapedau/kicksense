@@ -234,13 +234,13 @@ export default function SessionDetails() {
               </Card>
             </TabsContent>
 
-            {session.hasVideo && (
+            {set.hasVideo && (
               <TabsContent value="video" className="mt-6">
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-base flex items-center">
                       <Video className="w-4 h-4 mr-2" />
-                      Session Video
+                      Set Video
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -249,7 +249,7 @@ export default function SessionDetails() {
                         <Video className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
                         <p className="text-muted-foreground">Video Preview</p>
                         <p className="text-xs text-muted-foreground mt-1">
-                          {session.videoSize}
+                          {set.videoSize}
                         </p>
                       </div>
                       <Button
