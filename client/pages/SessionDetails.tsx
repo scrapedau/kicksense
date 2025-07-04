@@ -138,15 +138,15 @@ export default function SessionDetails() {
                 Set Details
               </h1>
               <p className="text-muted-foreground">
-                {session.date} • {session.time}
+                {set.date} • {set.time}
               </p>
             </div>
           </div>
           <Badge variant="outline" className={getKickTypeColor()}>
             {getKickTypeIcon()}
             <span className="ml-1">
-              {session.kickType.charAt(0).toUpperCase() +
-                session.kickType.slice(1).replace("-", " ")}
+              {set.kickType.charAt(0).toUpperCase() +
+                set.kickType.slice(1).replace("-", " ")}
             </span>
           </Badge>
         </div>
