@@ -21,7 +21,6 @@ import { cn } from "@/lib/utils";
 
 export default function Settings() {
   const [sensorConnected, setSensorConnected] = useState(true);
-  const [isMetric, setIsMetric] = useState(false);
   const [videoOverlays, setVideoOverlays] = useState(true);
 
   return (
@@ -73,59 +72,6 @@ export default function Settings() {
                 <Wifi className="w-4 h-4 mr-2" />
                 Pair New Device
               </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Units & Display */}
-        <Card className="mb-6">
-          <CardHeader>
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center">
-                <Gauge className="w-5 h-5 text-accent" />
-              </div>
-              <div>
-                <CardTitle className="text-base">Units & Display</CardTitle>
-                <CardDescription>
-                  Measurement system for all data
-                </CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <p className="text-sm font-medium text-foreground mb-3">
-                Measurement System
-              </p>
-              <div className="flex bg-muted rounded-lg p-1">
-                <button
-                  onClick={() => setIsMetric(false)}
-                  className={cn(
-                    "flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all",
-                    !isMetric
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  Imperial
-                </button>
-                <button
-                  onClick={() => setIsMetric(true)}
-                  className={cn(
-                    "flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all",
-                    isMetric
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  Metric
-                </button>
-              </div>
-              <div className="mt-2 text-xs text-muted-foreground">
-                {isMetric
-                  ? "Speed in km/h, Distance in cm"
-                  : "Speed in mph, Distance in inches"}
-              </div>
             </div>
           </CardContent>
         </Card>

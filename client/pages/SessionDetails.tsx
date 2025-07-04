@@ -44,7 +44,7 @@ export default function SessionDetails() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [isMetric, setIsMetric] = useState(false); // TODO: Get from user preferences
+  // App operates in Imperial units only
 
   // Mock session data - in real app, this would be fetched based on sessionId
   const session: SessionData = {
@@ -178,13 +178,13 @@ export default function SessionDetails() {
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-bold text-foreground">
-                    {formatSpeed(session.peakSpeed, isMetric)}
+                    {session.peakSpeed.toFixed(1)} mph
                   </p>
                   <p className="text-sm text-muted-foreground">Peak Speed</p>
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-bold text-foreground">
-                    {formatDistance(session.curvedLinearROM, isMetric)}
+                    {session.curvedLinearROM.toFixed(1)} in
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Max Linear ROM
@@ -204,7 +204,7 @@ export default function SessionDetails() {
                       Average Foot Speed:
                     </span>
                     <span className="font-medium">
-                      {formatSpeed(session.footSpeed, isMetric)}
+                      {session.footSpeed.toFixed(1)} mph
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -212,7 +212,7 @@ export default function SessionDetails() {
                       Peak Foot Speed:
                     </span>
                     <span className="font-medium">
-                      {formatSpeed(session.peakSpeed, isMetric)}
+                      {session.peakSpeed.toFixed(1)} mph
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -220,7 +220,7 @@ export default function SessionDetails() {
                       Max Linear ROM:
                     </span>
                     <span className="font-medium">
-                      {formatDistance(session.curvedLinearROM, isMetric)}
+                      {session.curvedLinearROM.toFixed(1)} in
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -278,40 +278,43 @@ export default function SessionDetails() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {peakFootSpeedData.map((peak, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
-                      >
-                        <div className="flex items-center space-x-3">
-                          <div className="text-sm font-mono text-muted-foreground">
-                            {peak.timestamp}
-                          </div>
-                          <div className="text-sm font-medium">
-                            Kick #{index + 1}
+                      <div key={index} className="p-4 bg-muted/50 rounded-lg">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center space-x-3">
+                            <div className="text-sm font-mono text-muted-foreground">
+                              {peak.timestamp}
+                            </div>
+                            <div className="text-sm font-medium">
+                              Kick #{index + 1}
+                            </div>
                           </div>
                         </div>
-                        <div className="flex space-x-4 text-sm">
-                          <div>
-                            <span className="text-muted-foreground">
-                              Speed:{" "}
-                            </span>
-                            <span className="font-medium">
-                              {formatSpeed(peak.value, isMetric)}
-                            </span>
+                        <div className="grid grid-cols-3 gap-4 text-sm">
+                          <div className="text-center">
+                            <div className="text-muted-foreground mb-1">
+                              Speed
+                            </div>
+                            <div className="font-medium text-base">
+                              {peak.value.toFixed(1)} mph
+                            </div>
                           </div>
-                          <div>
-                            <span className="text-muted-foreground">ROM: </span>
-                            <span className="font-medium">
-                              {formatDistance(peak.rom, isMetric)}
-                            </span>
+                          <div className="text-center">
+                            <div className="text-muted-foreground mb-1">
+                              ROM
+                            </div>
+                            <div className="font-medium text-base">
+                              {peak.rom.toFixed(1)} in
+                            </div>
                           </div>
-                          <div>
-                            <span className="text-muted-foreground">
-                              Angle:{" "}
-                            </span>
-                            <span className="font-medium">{peak.angle}°</span>
+                          <div className="text-center">
+                            <div className="text-muted-foreground mb-1">
+                              Angle
+                            </div>
+                            <div className="font-medium text-base">
+                              {peak.angle}°
+                            </div>
                           </div>
                         </div>
                       </div>

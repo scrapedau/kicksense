@@ -27,7 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 export default function History() {
-  const [isMetric, setIsMetric] = useState(false); // TODO: Get from user preferences
+  // App operates in Imperial units only
   const navigate = useNavigate();
 
   const sessions = [
@@ -224,7 +224,7 @@ export default function History() {
                     <div className="flex items-center mt-2">
                       <Zap className="w-3 h-3 text-primary mr-1" />
                       <span className="text-sm font-medium text-foreground">
-                        {formatSpeed(session.peakSpeed, isMetric)} peak
+                        {session.peakSpeed.toFixed(1)} mph peak
                       </span>
                       {session.hasVideo && session.videoSize && (
                         <>
@@ -242,7 +242,7 @@ export default function History() {
                           Foot Speed:{" "}
                         </span>
                         <span className="font-medium">
-                          {formatSpeed(session.footSpeed, isMetric)}
+                          {session.footSpeed.toFixed(1)} mph
                         </span>
                       </div>
                       <div>
@@ -250,7 +250,7 @@ export default function History() {
                           Linear ROM:{" "}
                         </span>
                         <span className="font-medium">
-                          {formatDistance(session.curvedLinearROM, isMetric)}
+                          {session.curvedLinearROM.toFixed(1)} in
                         </span>
                       </div>
                       <div>

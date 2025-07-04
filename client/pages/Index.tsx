@@ -17,7 +17,7 @@ import { formatSpeed, formatDistance } from "@/lib/units";
 
 export default function Index() {
   const [showKickTypeSelector, setShowKickTypeSelector] = useState(false);
-  const [isMetric, setIsMetric] = useState(false); // TODO: Get from user preferences
+  // App operates in Imperial units only
   const navigate = useNavigate();
 
   const handleKickTypeSelect = (kickType: KickType, withVideo: boolean) => {
