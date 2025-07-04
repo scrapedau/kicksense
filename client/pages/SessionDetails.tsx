@@ -154,7 +154,7 @@ export default function SessionDetails() {
         {/* Content */}
         <div className="pb-20">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               {session.hasVideo && (
                 <TabsTrigger value="video">Video</TabsTrigger>
