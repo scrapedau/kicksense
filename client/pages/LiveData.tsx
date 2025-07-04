@@ -208,7 +208,7 @@ export default function LiveData() {
 
                   <div className="text-center">
                     <p className="text-2xl font-mono font-bold text-foreground">
-                      {formatTime(sessionDuration)}
+                      {formatTime(setDuration)}
                     </p>
                     <p className="text-xs text-muted-foreground">Duration</p>
                   </div>
