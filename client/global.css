@@ -9,93 +9,93 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: 45 25% 93%;
+    --foreground: 145 21% 16%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card: 45 25% 93%;
+    --card-foreground: 145 21% 16%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover: 45 25% 93%;
+    --popover-foreground: 145 21% 16%;
 
-    --primary: 210 100% 50%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 134 96% 49%;
+    --primary-foreground: 145 21% 16%;
 
-    --secondary: 152 76% 41%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 170 61% 39%;
+    --secondary-foreground: 45 25% 93%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 145 13% 24%;
+    --muted-foreground: 45 15% 70%;
 
-    --accent: 15 100% 55%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 134 96% 49%;
+    --accent-foreground: 145 21% 16%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 45 25% 93%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 210 100% 50%;
+    --border: 145 13% 24%;
+    --input: 145 13% 24%;
+    --ring: 134 96% 49%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 210 100% 50%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 240 5.9% 90%;
-    --sidebar-ring: 210 100% 50%;
+    --sidebar-background: 45 25% 93%;
+    --sidebar-foreground: 145 21% 16%;
+    --sidebar-primary: 134 96% 49%;
+    --sidebar-primary-foreground: 145 21% 16%;
+    --sidebar-accent: 145 13% 24%;
+    --sidebar-accent-foreground: 45 25% 93%;
+    --sidebar-border: 145 13% 24%;
+    --sidebar-ring: 134 96% 49%;
 
     --gradient-primary: linear-gradient(
       135deg,
-      hsl(210 100% 50%) 0%,
-      hsl(152 76% 41%) 100%
+      hsl(134 96% 49%) 0%,
+      hsl(170 61% 39%) 100%
     );
     --gradient-accent: linear-gradient(
       135deg,
-      hsl(15 100% 55%) 0%,
-      hsl(45 100% 60%) 100%
+      hsl(134 96% 49%) 0%,
+      hsl(170 61% 39%) 100%
     );
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 145 21% 16%;
+    --foreground: 45 25% 93%;
 
-    --card: 240 10% 7%;
-    --card-foreground: 0 0% 98%;
+    --card: 145 13% 24%;
+    --card-foreground: 45 25% 93%;
 
-    --popover: 240 10% 7%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 145 13% 24%;
+    --popover-foreground: 45 25% 93%;
 
-    --primary: 210 100% 50%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 134 96% 49%;
+    --primary-foreground: 145 21% 16%;
 
-    --secondary: 152 76% 41%;
-    --secondary-foreground: 240 10% 3.9%;
+    --secondary: 170 61% 39%;
+    --secondary-foreground: 45 25% 93%;
 
-    --muted: 240 6% 10%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 145 13% 24%;
+    --muted-foreground: 45 15% 70%;
 
-    --accent: 15 100% 55%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 134 96% 49%;
+    --accent-foreground: 145 21% 16%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 45 25% 93%;
 
-    --border: 240 6% 20%;
-    --input: 240 6% 20%;
-    --ring: 210 100% 50%;
-    --sidebar-background: 240 10% 7%;
-    --sidebar-foreground: 240 5% 65%;
-    --sidebar-primary: 210 100% 50%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 6% 10%;
-    --sidebar-accent-foreground: 240 5% 65%;
-    --sidebar-border: 240 6% 20%;
-    --sidebar-ring: 210 100% 50%;
+    --border: 145 13% 24%;
+    --input: 145 13% 24%;
+    --ring: 134 96% 49%;
+    --sidebar-background: 145 13% 24%;
+    --sidebar-foreground: 45 25% 93%;
+    --sidebar-primary: 134 96% 49%;
+    --sidebar-primary-foreground: 145 21% 16%;
+    --sidebar-accent: 145 13% 24%;
+    --sidebar-accent-foreground: 45 25% 93%;
+    --sidebar-border: 145 13% 24%;
+    --sidebar-ring: 134 96% 49%;
   }
 }
 
