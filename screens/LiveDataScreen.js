@@ -22,7 +22,6 @@ const LiveDataScreen = ({ navigation, route }) => {
     y: 0,
     z: 0,
   });
-  const [accelerationEvents, setAccelerationEvents] = useState([]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -53,18 +52,6 @@ const LiveDataScreen = ({ navigation, route }) => {
           z: Math.random() * 20 - 10,
         };
         setAccelerationPeaks(newPeaks);
-
-        // Add acceleration events occasionally
-        if (Math.random() > 0.8) {
-          const event = {
-            id: Date.now(),
-            timestamp: Date.now(),
-            acceleration: Math.sqrt(
-              newPeaks.x ** 2 + newPeaks.y ** 2 + newPeaks.z ** 2,
-            ),
-          };
-          setAccelerationEvents((prev) => [event, ...prev.slice(0, 9)]);
-        }
       }, 100);
     } else {
       // Reset on new set
@@ -72,7 +59,6 @@ const LiveDataScreen = ({ navigation, route }) => {
       setPeakSpeed(0);
       setSetDuration(0);
       setAccelerationPeaks({ x: 0, y: 0, z: 0 });
-      setAccelerationEvents([]);
     }
 
     return () => clearInterval(interval);
@@ -169,30 +155,6 @@ const LiveDataScreen = ({ navigation, route }) => {
             >
               {isRecording ? "Recording" : "Stopped"}
             </Text>
-          </View>
-        </View>
-
-        {/* Acceleration Events */}
-        <View style={styles.eventsContainer}>
-          <Text style={styles.eventsTitle}>Recent Acceleration Events</Text>
-          <View style={styles.eventsList}>
-            {accelerationEvents.length === 0 ? (
-              <Text style={styles.noEventsText}>No events detected</Text>
-            ) : (
-              accelerationEvents.map((event, index) => (
-                <View
-                  key={event.id}
-                  style={[styles.eventItem, { opacity: 1 - index * 0.1 }]}
-                >
-                  <Text style={styles.eventText}>
-                    {event.acceleration.toFixed(1)} m/s²
-                  </Text>
-                  <Text style={styles.eventTime}>
-                    {new Date(event.timestamp).toLocaleTimeString()}
-                  </Text>
-                </View>
-              ))
-            )}
           </View>
         </View>
 
@@ -339,44 +301,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#1E2D24",
-  },
-  eventsContainer: {
-    marginBottom: 20,
-  },
-  eventsTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#1E2D24",
-    marginBottom: 12,
-  },
-  eventsList: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 12,
-    padding: 16,
-    minHeight: 100,
-  },
-  noEventsText: {
-    fontSize: 14,
-    color: "#BEB8A7",
-    textAlign: "center",
-    marginTop: 32,
-  },
-  eventItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#F5F5F5",
-  },
-  eventText: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#1E2D24",
-  },
-  eventTime: {
-    fontSize: 12,
-    color: "#BEB8A7",
   },
   rawDataContainer: {
     backgroundColor: "#FFFFFF",
