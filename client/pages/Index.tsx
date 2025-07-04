@@ -256,37 +256,24 @@ export default function Index() {
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0 space-y-3">
-              <div className="flex justify-between items-center py-2">
-                <div>
-                  <p className="text-sm font-medium text-foreground">
-                    Dec 15, 2024
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    45 kicks • 32 min
-                  </p>
+              {recentSets.map((set) => (
+                <div key={set.id} className="flex justify-between items-center py-2">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">
+                      {set.date}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {set.kicks} kicks • {set.duration}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-medium text-secondary">
+                      {set.peakSpeed.toFixed(1)} mph
+                    </p>
+                    <p className="text-xs text-muted-foreground">Peak speed</p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-medium text-secondary">72 mph</p>
-                  <p className="text-xs text-muted-foreground">Peak speed</p>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center py-2">
-                <div>
-                  <p className="text-sm font-medium text-foreground">
-                    Dec 12, 2024
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    38 kicks • 28 min
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-medium text-secondary">69 mph</p>
-                  <p className="text-xs text-muted-foreground">Peak speed</p>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center py-2">
+              ))}
                 <div>
                   <p className="text-sm font-medium text-foreground">
                     Dec 10, 2024
