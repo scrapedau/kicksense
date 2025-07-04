@@ -20,6 +20,7 @@ import {
   Target,
   ArrowUp,
   Zap,
+  Box,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatSpeed, formatDistance } from "@/lib/units";
