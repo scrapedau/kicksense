@@ -8,8 +8,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, TrendingUp, Target, Zap, ArrowUp } from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
+import { formatSpeed, formatDistance } from "@/lib/units";
+import { useState } from "react";
 
 export default function History() {
+  const [isMetric, setIsMetric] = useState(false); // TODO: Get from user preferences
+
   const sessions = [
     {
       id: 1,
@@ -154,7 +158,7 @@ export default function History() {
                         Peak Speed
                       </span>
                       <span className="text-sm font-medium text-foreground">
-                        {session.peakSpeed} mph
+                        {formatSpeed(session.peakSpeed, isMetric)}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
@@ -162,7 +166,7 @@ export default function History() {
                         Curved Linear ROM
                       </span>
                       <span className="text-sm font-medium text-foreground">
-                        {session.curvedLinearROM} in
+                        {formatDistance(session.curvedLinearROM, isMetric)}
                       </span>
                     </div>
                   </div>
@@ -172,7 +176,7 @@ export default function History() {
                         Ball Speed
                       </span>
                       <span className="text-sm font-medium text-foreground">
-                        {session.ballSpeed} mph
+                        {formatSpeed(session.ballSpeed, isMetric)}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">

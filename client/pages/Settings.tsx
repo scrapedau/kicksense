@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 
 export default function Settings() {
   const [sensorConnected, setSensorConnected] = useState(true);
-  const [unitsMetric, setUnitsMetric] = useState(false);
+  const [isMetric, setIsMetric] = useState(false);
   const [videoOverlays, setVideoOverlays] = useState(true);
 
   return (
@@ -86,38 +86,45 @@ export default function Settings() {
               </div>
               <div>
                 <CardTitle className="text-base">Units & Display</CardTitle>
-                <CardDescription>Customize measurement units</CardDescription>
+                <CardDescription>
+                  Measurement system for all data
+                </CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <p className="text-sm font-medium text-foreground mb-3">
-                Speed Units
+                Measurement System
               </p>
               <div className="flex bg-muted rounded-lg p-1">
                 <button
-                  onClick={() => setUnitsMetric(false)}
+                  onClick={() => setIsMetric(false)}
                   className={cn(
                     "flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all",
-                    !unitsMetric
+                    !isMetric
                       ? "bg-background text-foreground shadow-sm"
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  mph
+                  Imperial
                 </button>
                 <button
-                  onClick={() => setUnitsMetric(true)}
+                  onClick={() => setIsMetric(true)}
                   className={cn(
                     "flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all",
-                    unitsMetric
+                    isMetric
                       ? "bg-background text-foreground shadow-sm"
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  km/h
+                  Metric
                 </button>
+              </div>
+              <div className="mt-2 text-xs text-muted-foreground">
+                {isMetric
+                  ? "Speed in km/h, Distance in cm"
+                  : "Speed in mph, Distance in inches"}
               </div>
             </div>
           </CardContent>

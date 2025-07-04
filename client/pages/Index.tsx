@@ -13,9 +13,11 @@ import { useNavigate } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BluetoothIndicator from "@/components/BluetoothIndicator";
 import KickTypeSelector, { KickType } from "@/components/KickTypeSelector";
+import { formatSpeed, formatDistance } from "@/lib/units";
 
 export default function Index() {
   const [showKickTypeSelector, setShowKickTypeSelector] = useState(false);
+  const [isMetric, setIsMetric] = useState(false); // TODO: Get from user preferences
   const navigate = useNavigate();
 
   const handleKickTypeSelect = (kickType: KickType, withVideo: boolean) => {
@@ -91,13 +93,20 @@ export default function Index() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">72</p>
-                    <p className="text-xs text-muted-foreground">Speed (mph)</p>
+                    <p className="text-lg font-bold text-foreground">
+                      {formatSpeed(72, isMetric).split(" ")[0]}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Speed ({formatSpeed(72, isMetric).split(" ")[1]})
+                    </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">18.5</p>
+                    <p className="text-lg font-bold text-foreground">
+                      {formatDistance(18.5, isMetric).split(" ")[0]}
+                    </p>
                     <p className="text-xs text-muted-foreground">
-                      Linear ROM (in)
+                      Linear ROM ({formatDistance(18.5, isMetric).split(" ")[1]}
+                      )
                     </p>
                   </div>
                   <div className="text-center">
@@ -126,13 +135,20 @@ export default function Index() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">69</p>
-                    <p className="text-xs text-muted-foreground">Speed (mph)</p>
+                    <p className="text-lg font-bold text-foreground">
+                      {formatSpeed(69, isMetric).split(" ")[0]}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Speed ({formatSpeed(69, isMetric).split(" ")[1]})
+                    </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">22.3</p>
+                    <p className="text-lg font-bold text-foreground">
+                      {formatDistance(22.3, isMetric).split(" ")[0]}
+                    </p>
                     <p className="text-xs text-muted-foreground">
-                      Linear ROM (in)
+                      Linear ROM ({formatDistance(22.3, isMetric).split(" ")[1]}
+                      )
                     </p>
                   </div>
                   <div className="text-center">
@@ -163,13 +179,20 @@ export default function Index() {
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">75</p>
-                    <p className="text-xs text-muted-foreground">Speed (mph)</p>
+                    <p className="text-lg font-bold text-foreground">
+                      {formatSpeed(75, isMetric).split(" ")[0]}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Speed ({formatSpeed(75, isMetric).split(" ")[1]})
+                    </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-bold text-foreground">16.8</p>
+                    <p className="text-lg font-bold text-foreground">
+                      {formatDistance(16.8, isMetric).split(" ")[0]}
+                    </p>
                     <p className="text-xs text-muted-foreground">
-                      Linear ROM (in)
+                      Linear ROM ({formatDistance(16.8, isMetric).split(" ")[1]}
+                      )
                     </p>
                   </div>
                   <div className="text-center">
