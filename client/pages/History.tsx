@@ -22,9 +22,11 @@ import {
 } from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
 import { formatSpeed, formatDistance } from "@/lib/units";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { SetData } from "@/types";
+import { DataService } from "@/services/dataService";
 
 export default function History() {
   // App operates in Imperial units only
