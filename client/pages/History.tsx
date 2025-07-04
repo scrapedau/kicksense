@@ -23,9 +23,13 @@ import {
 import BottomNavigation from "@/components/BottomNavigation";
 import { formatSpeed, formatDistance } from "@/lib/units";
 import { useState } from "react";
+import SessionViewer from "@/components/SessionViewer";
 
 export default function History() {
   const [isMetric, setIsMetric] = useState(false); // TODO: Get from user preferences
+  const [selectedSession, setSelectedSession] = useState<
+    (typeof sessions)[0] | null
+  >(null);
 
   const sessions = [
     {
@@ -263,28 +267,43 @@ export default function History() {
                 </div>
 
                 <div className="flex space-x-2">
-                  <Button variant="outline" size="sm" className="flex-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => setSelectedSession(session)}
+                  >
                     <Eye className="w-4 h-4 mr-2" />
                     View
                   </Button>
                   <Button variant="outline" size="sm" className="flex-1">
                     <Download className="w-4 h-4 mr-2" />
-                    Export
+                    Export Data
                   </Button>
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="flex-1 bg-primary text-primary-foreground"
-                  >
-                    <Share2 className="w-4 h-4 mr-2" />
-                    Share
-                  </Button>
+                  {session.hasVideo && (
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="flex-1 bg-secondary text-secondary-foreground"
+                    >
+                      <Video className="w-4 h-4 mr-2" />
+                      Export Video
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
+
+      {selectedSession && (
+        <SessionViewer
+          session={selectedSession}
+          isMetric={isMetric}
+          onClose={() => setSelectedSession(null)}
+        />
+      )}
 
       <BottomNavigation />
     </div>
