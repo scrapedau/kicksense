@@ -1,164 +1,260 @@
-# Fusion Starter
+# KickSense React Native App
 
-A production-ready full-stack React application template with integrated Express server, featuring React Router 6 SPA mode, TypeScript, Vitest, Zod and modern tooling.
-
-While the starter comes with a express server, only create endpoint when strictly neccesary, for example to encapsulate logic that must leave in the server, such as private keys handling, or certain DB operations, db...
+A production-ready React Native application for football kicking analysis, featuring real-time sensor data, video recording, and performance analytics. Built for Expo and designed for easy Bluetooth sensor integration.
 
 ## Tech Stack
 
-- **Frontend**: React 18 + React Router 6 (spa) + TypeScript + Vite + TailwindCSS 3
-- **Backend**: Express server integrated with Vite dev server
-- **Testing**: Vitest
-- **UI**: Radix UI + TailwindCSS 3 + Lucide React icons
+- **Frontend**: React Native + Expo
+- **Navigation**: React Navigation (Stack + Bottom Tabs)
+- **Styling**: StyleSheet (native React Native styling)
+- **Icons**: Expo Vector Icons
+- **Data**: Service layer architecture for easy API integration
+- **Platforms**: iOS, Android, Web (via Expo)
 
 ## Project Structure
 
 ```
-client/                   # React SPA frontend
-├── pages/                # Route components (Index.tsx = home)
-├── components/ui/        # Pre-built UI component library
-├── App.tsx                # App entry point and with SPA routing setup
-└── global.css            # TailwindCSS 3 theming and global styles
+App.js                    # Main navigation entry point
+screens/                  # Screen components
+├── HomeScreen.js         # Home page with personal bests
+├── HistoryScreen.js      # Set history and statistics
+├── LiveDataScreen.js     # Real-time recording interface
+├── SetDetailsScreen.js   # Detailed set analysis
+└── SettingsScreen.js     # App and device settings
 
-server/                   # Express API backend
-├── index.ts              # Main server setup (express config + routes)
-└── routes/               # API handlers
+data/                     # Data layer
+├── dataService.js        # API service layer
+└── mockData.js           # Mock data for development
 
-shared/                   # Types used by both client & server
-└── api.ts                # Example of how to share api interfaces
+package.json              # React Native/Expo dependencies
 ```
 
 ## Key Features
 
-## SPA Routing System
+### Navigation System
 
-The routing system is powered by React Router 6:
+The app uses React Navigation with a hybrid stack/tab structure:
 
-- `client/pages/Index.tsx` represents the home page.
-- Routes are defined in `client/App.tsx` using the `react-router-dom` import
-- Route files are located in the `client/pages/` directory
+- **Bottom Tabs**: Home, History, Settings (main navigation)
+- **Stack Navigation**: Drill-down screens (LiveData, SetDetails)
+- **Tab Icons**: Expo Vector Icons with focused/unfocused states
 
-For example, routes can be defined with:
+Example navigation usage:
 
-```typescript
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+```javascript
+// Navigate to another screen
+navigation.navigate("SetDetails", { setId: 1 });
 
-<Routes>
-  <Route path="/" element={<Index />} />
-  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-  <Route path="*" element={<NotFound />} />
-</Routes>;
+// Go back
+navigation.goBack();
 ```
+
+### Screen Architecture
+
+#### HomeScreen.js
+
+- Personal bests display by kick type
+- "Start Set" button with kick type selection modal
+- Recent sets preview
+- Bluetooth connection indicator
+
+#### HistoryScreen.js
+
+- Complete sets history with filtering
+- Statistics cards (total sets, video/data counts)
+- Set cards with kick type badges and performance data
+- Navigation to detailed set view
+
+#### LiveDataScreen.js
+
+- Real-time sensor data simulation
+- Camera viewfinder interface
+- Recording controls with visual feedback
+- Live acceleration and speed display
+
+#### SetDetailsScreen.js
+
+- Tabbed interface: Overview, Video, Data, 3D Visualizer
+- Peak performance data analysis
+- Raw sensor data tables
+- Video playback (when available)
+
+#### SettingsScreen.js
+
+- Device connection management
+- Recording preferences
+- Data export options
+- App information and help
+
+### Data Architecture
+
+The app uses a service layer pattern for clean data management:
+
+```javascript
+// DataService provides async methods for all data operations
+import { DataService } from "../data/dataService";
+
+// Get all sets
+const sets = await DataService.getAllSets();
+
+// Get personal bests
+const bests = await DataService.getPersonalBests();
+
+// Get set details
+const set = await DataService.getSetById(setId);
+```
+
+#### Data Types
+
+- **SetData**: Complete training set information
+- **PersonalBests**: Best performances by kick type
+- **PeakPerformanceData**: Individual kick analysis
+- **RawSensorData**: Raw accelerometer/gyroscope readings
 
 ### Styling System
 
-- **Primary**: TailwindCSS 3 utility classes
-- **Theme and design tokens**: Configure in `client/global.css` 
-- **UI components**: Pre-built library in `client/components/ui/`
-- **Utility**: `cn()` function combines `clsx` + `tailwind-merge` for conditional classes
+React Native StyleSheet with consistent design tokens:
 
-```typescript
-// cn utility usage
-className={cn(
-  "base-classes",
-  { "conditional-class": condition },
-  props.className  // User overrides
-)}
+```javascript
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F2EFE9", // Cream background
+  },
+  primaryButton: {
+    backgroundColor: "#25A18E", // Primary green
+    borderRadius: 12,
+    paddingVertical: 16,
+  },
+  text: {
+    color: "#1E2D24", // Dark green text
+  },
+});
 ```
 
-### Express Server Integration
+**Color Palette:**
 
-- **Development**: Single port (8080) for both frontend/backend
-- **Hot reload**: Both client and server code
-- **API endpoints**: Prefixed with `/api/`
-
-#### Example API Routes
-- `GET /api/ping` - Simple ping api
-- `GET /api/demo` - Demo endpoint  
-
-### Shared Types
-Import consistent types in both client and server:
-```typescript
-import { DemoResponse } from '@shared/api';
-```
-
-Path aliases:
-- `@shared/*` - Shared folder
-- `@/*` - Client folder
+- Background: `#F2EFE9` (cream)
+- Primary: `#25A18E` (teal green)
+- Secondary: `#05F140` (bright green)
+- Text: `#1E2D24` (dark green)
+- Muted: `#BEB8A7` (light brown)
 
 ## Development Commands
 
 ```bash
-npm run dev        # Start dev server (client + server)
-npm run build      # Production build
-npm run start      # Start production server
-npm run typecheck  # TypeScript validation
-npm test          # Run Vitest tests
+npm start          # Start Expo development server
+npm run android    # Run on Android device/emulator
+npm run ios        # Run on iOS device/simulator
+npm run web        # Run in web browser
 ```
 
 ## Adding Features
 
-### Add new colors to the theme
+### New Screen
 
-Open `client/global.css` and `tailwind.config.ts` and add new tailwind colors.
+1. Create component in `screens/NewScreen.js`:
 
-### New API Route
-1. **Optional**: Create a shared interface in `shared/api.ts`:
-```typescript
-export interface MyRouteResponse {
-  message: string;
-  // Add other response properties here
+```javascript
+import React from "react";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+
+const NewScreen = ({ navigation }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text>New Screen Content</Text>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F2EFE9",
+  },
+});
+
+export default NewScreen;
+```
+
+2. Add to navigation in `App.js`:
+
+```javascript
+<Stack.Screen name="NewScreen" component={NewScreen} />
+```
+
+### New Data Service Method
+
+Add methods to `data/dataService.js`:
+
+```javascript
+export class DataService {
+  static async getNewData() {
+    await delay(100);
+    return mockData.newDataArray;
+  }
 }
 ```
 
-2. Create a new route handler in `server/routes/my-route.ts`:
-```typescript
-import { RequestHandler } from "express";
-import { MyRouteResponse } from "@shared/api"; // Optional: for type safety
+### Bluetooth Integration (Future)
 
-export const handleMyRoute: RequestHandler = (req, res) => {
-  const response: MyRouteResponse = {
-    message: 'Hello from my endpoint!'
-  };
-  res.json(response);
-};
+The architecture is ready for Bluetooth sensor integration:
+
+1. **Install Bluetooth package**: `expo install expo-bluetooth`
+2. **Create BluetoothService**: Similar to DataService pattern
+3. **Update LiveDataScreen**: Replace mock data with real sensor streams
+4. **Modify DataService**: Save real training sets
+
+Example Bluetooth integration:
+
+```javascript
+// BluetoothService.js
+export class BluetoothService {
+  static async connect() {
+    // Connect to MetaMotionRL device
+  }
+
+  static onDataReceived(callback) {
+    // Stream real sensor data to callback
+  }
+}
+
+// In LiveDataScreen.js
+BluetoothService.onDataReceived((sensorData) => {
+  setCurrentSpeed(sensorData.footSpeed);
+  setAccelerationPeaks(sensorData.acceleration);
+});
 ```
 
-3. Register the route in `server/index.ts`:
-```typescript
-import { handleMyRoute } from "./routes/my-route";
+## Expo Snack Deployment
 
-// Add to the createServer function:
-app.get("/api/my-endpoint", handleMyRoute);
-```
+This app is optimized for Expo Snack:
 
-4. Use in React components with type safety:
-```typescript
-import { MyRouteResponse } from '@shared/api'; // Optional: for type safety
-
-const response = await fetch('/api/my-endpoint');
-const data: MyRouteResponse = await response.json();
-```
-
-### New Page Route
-1. Create component in `client/pages/MyPage.tsx`
-2. Add route in `client/App.tsx`:
-```typescript
-<Route path="/my-page" element={<MyPage />} />
-```
+1. **Copy all files** to a new Snack project
+2. **Dependencies auto-install** from package.json
+3. **Run immediately** on iOS/Android/Web
+4. **QR code sharing** for device testing
 
 ## Production Deployment
 
-- **Standard**: `npm run build` + `npm start`
-- **Docker**: Dockerfile included
-- **Binary**: Self-contained executables (Linux, macOS, Windows)
-- Express serves the built React SPA with fallback routing support
+- **Expo Build**: `expo build:android` / `expo build:ios`
+- **App Stores**: Ready for Google Play / Apple App Store
+- **OTA Updates**: Expo's over-the-air update system
+- **Standalone Apps**: Self-contained native apps
 
 ## Architecture Notes
 
-- Single-port development with Vite + Express integration
-- TypeScript throughout (client, server, shared)
-- Full hot reload for rapid development
-- Production-ready with multiple deployment options
-- Comprehensive UI component library included
-- Type-safe API communication via shared interfaces
+- **Mobile-first design** with native platform optimizations
+- **Service layer pattern** for easy real-world API integration
+- **Async data loading** with proper loading states
+- **TypeScript ready** - can be converted by changing file extensions
+- **Bluetooth ready** - architecture supports real sensor integration
+- **Cross-platform** - works on iOS, Android, and Web via Expo
+
+## Folder Structure Benefits
+
+- **Screens**: Each screen is self-contained and reusable
+- **Data layer**: Clean separation between UI and data logic
+- **Mock data**: Easy development and testing
+- **Navigation**: Centralized routing with parameter passing
+- **Styling**: Consistent design system with native performance
