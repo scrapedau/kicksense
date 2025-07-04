@@ -31,8 +31,36 @@ import { DataService } from "@/services/dataService";
 export default function History() {
   // App operates in Imperial units only
   const navigate = useNavigate();
+  const [sets, setSets] = useState<SetData[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const sets = [
+  useEffect(() => {
+    const loadSets = async () => {
+      try {
+        const allSets = await DataService.getAllSets();
+        setSets(allSets);
+      } catch (error) {
+        console.error("Failed to load sets:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSets();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading sets...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const historicalSets = [
     {
       id: 1,
       date: "Dec 15, 2024",
