@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import BottomNavigation from "@/components/BottomNavigation";
+import { cn } from "@/lib/utils";
 
 export default function Settings() {
   const [sensorConnected, setSensorConnected] = useState(true);
@@ -90,18 +91,34 @@ export default function Settings() {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-foreground">
-                  Speed Units
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {unitsMetric
-                    ? "Kilometers per hour (km/h)"
-                    : "Miles per hour (mph)"}
-                </p>
+            <div>
+              <p className="text-sm font-medium text-foreground mb-3">
+                Speed Units
+              </p>
+              <div className="flex bg-muted rounded-lg p-1">
+                <button
+                  onClick={() => setUnitsMetric(false)}
+                  className={cn(
+                    "flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all",
+                    !unitsMetric
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  mph
+                </button>
+                <button
+                  onClick={() => setUnitsMetric(true)}
+                  className={cn(
+                    "flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all",
+                    unitsMetric
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  km/h
+                </button>
               </div>
-              <Switch checked={unitsMetric} onCheckedChange={setUnitsMetric} />
             </div>
           </CardContent>
         </Card>
