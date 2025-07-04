@@ -173,7 +173,7 @@ export default function LiveData() {
               currentFootSpeed={currentFootSpeed}
               peakFootSpeed={peakFootSpeed}
               accelerationPeaks={accelerationPeaks}
-              sessionDuration={sessionDuration}
+              sessionDuration={setDuration}
               isRecording={isRecording}
               onStartStop={handleStartStop}
             />
