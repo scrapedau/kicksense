@@ -286,37 +286,7 @@ export default function Index() {
                   <p className="text-sm font-medium text-secondary">74 mph</p>
                   <p className="text-xs text-muted-foreground">Peak speed</p>
                 </div>
-              </div>
-
-              <div className="flex justify-between items-center py-2">
-                <div>
-                  <p className="text-sm font-medium text-foreground">
-                    Dec 8, 2024
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    29 kicks • 22 min
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-medium text-secondary">66 mph</p>
-                  <p className="text-xs text-muted-foreground">Peak speed</p>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center py-2">
-                <div>
-                  <p className="text-sm font-medium text-foreground">
-                    Dec 5, 2024
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    41 kicks • 30 min
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-medium text-secondary">70 mph</p>
-                  <p className="text-xs text-muted-foreground">Peak speed</p>
-                </div>
-              </div>
+              })
             </CardContent>
           </Card>
         </div>
