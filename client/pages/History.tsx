@@ -154,45 +154,45 @@ export default function History() {
           <h2 className="text-lg font-semibold text-foreground">Recent Sets</h2>
 
           {sets.map((set) => (
-            <Card key={session.id} className="border border-border shadow-sm">
+            <Card key={set.id} className="border border-border shadow-sm">
               <CardContent className="p-4">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
                       <h3 className="text-sm font-medium text-foreground">
-                        {session.date}
+                        {set.date}
                       </h3>
                       <Badge
                         variant="outline"
                         className={
-                          session.kickType === "field-goal"
+                          set.kickType === "field-goal"
                             ? "bg-primary/10 text-primary border-primary/30"
-                            : session.kickType === "punt"
+                            : set.kickType === "punt"
                               ? "bg-secondary/10 text-secondary border-secondary/30"
                               : "bg-accent/10 text-accent border-accent/30"
                         }
                       >
-                        {session.kickType === "field-goal" && (
+                        {set.kickType === "field-goal" && (
                           <Target className="w-3 h-3 mr-1" />
                         )}
-                        {session.kickType === "punt" && (
+                        {set.kickType === "punt" && (
                           <ArrowUp className="w-3 h-3 mr-1" />
                         )}
-                        {session.kickType === "kickoff" && (
+                        {set.kickType === "kickoff" && (
                           <Zap className="w-3 h-3 mr-1" />
                         )}
-                        {session.kickType.charAt(0).toUpperCase() +
-                          session.kickType.slice(1).replace("-", " ")}
+                        {set.kickType.charAt(0).toUpperCase() +
+                          set.kickType.slice(1).replace("-", " ")}
                       </Badge>
                       <Badge
-                        variant={session.hasVideo ? "default" : "secondary"}
+                        variant={set.hasVideo ? "default" : "secondary"}
                         className={
-                          session.hasVideo
+                          set.hasVideo
                             ? "bg-secondary/20 text-secondary border-secondary/30"
                             : "bg-muted text-muted-foreground"
                         }
                       >
-                        {session.hasVideo ? (
+                        {set.hasVideo ? (
                           <>
                             <Video className="w-3 h-3 mr-1" />
                             Video
