@@ -106,11 +106,9 @@ export default function History() {
       <div className="px-6 pt-8 pb-6">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-foreground">
-            Session History
-          </h1>
+          <h1 className="text-2xl font-bold text-foreground">Set History</h1>
           <p className="text-muted-foreground">
-            View and share your recorded training sessions
+            View and share your recorded training sets
           </p>
         </div>
 
