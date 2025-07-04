@@ -97,7 +97,7 @@ export default function Index() {
                       {formatSpeed(72, isMetric).split(" ")[0]}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Speed ({formatSpeed(72, isMetric).split(" ")[1]})
+                      Foot Speed ({formatSpeed(72, isMetric).split(" ")[1]})
                     </p>
                   </div>
                   <div className="text-center">
@@ -139,7 +139,7 @@ export default function Index() {
                       {formatSpeed(69, isMetric).split(" ")[0]}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Speed ({formatSpeed(69, isMetric).split(" ")[1]})
+                      Foot Speed ({formatSpeed(69, isMetric).split(" ")[1]})
                     </p>
                   </div>
                   <div className="text-center">
@@ -183,7 +183,7 @@ export default function Index() {
                       {formatSpeed(75, isMetric).split(" ")[0]}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Speed ({formatSpeed(75, isMetric).split(" ")[1]})
+                      Foot Speed ({formatSpeed(75, isMetric).split(" ")[1]})
                     </p>
                   </div>
                   <div className="text-center">
