@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,6 +14,8 @@ import BottomNavigation from "@/components/BottomNavigation";
 import BluetoothIndicator from "@/components/BluetoothIndicator";
 import KickTypeSelector, { KickType } from "@/components/KickTypeSelector";
 import { formatSpeed, formatDistance } from "@/lib/units";
+import { PersonalBests, SetData } from "@/types";
+import { DataService } from "@/services/dataService";
 
 export default function Index() {
   const [showKickTypeSelector, setShowKickTypeSelector] = useState(false);
