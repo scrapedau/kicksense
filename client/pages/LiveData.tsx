@@ -79,7 +79,7 @@ export default function LiveData() {
     return () => clearInterval(interval);
   }, [isRecording]);
 
-  // Session timer
+  // Set timer
   useEffect(() => {
     if (!isRecording) return;
 
