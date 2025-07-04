@@ -23,7 +23,7 @@ import {
 import BottomNavigation from "@/components/BottomNavigation";
 import { formatSpeed, formatDistance } from "@/lib/units";
 import { useState } from "react";
-import SessionViewer from "@/components/SessionViewer";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 export default function History() {
@@ -272,7 +272,7 @@ export default function History() {
                     variant="outline"
                     size="sm"
                     className="w-full"
-                    onClick={() => setSelectedSession(session)}
+                    onClick={() => navigate(`/session/${session.id}`)}
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     View
@@ -299,14 +299,6 @@ export default function History() {
           ))}
         </div>
       </div>
-
-      {selectedSession && (
-        <SessionViewer
-          session={selectedSession}
-          isMetric={isMetric}
-          onClose={() => setSelectedSession(null)}
-        />
-      )}
 
       <BottomNavigation />
     </div>
