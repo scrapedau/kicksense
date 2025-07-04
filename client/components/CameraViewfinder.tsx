@@ -98,17 +98,6 @@ export default function CameraViewfinder({
               </div>
             </div>
           </div>
-
-          {/* Corner frame indicators */}
-          <div className="absolute top-4 left-4 w-6 h-6 border-l-2 border-t-2 border-white/60"></div>
-          <div className="absolute top-4 right-4 w-6 h-6 border-r-2 border-t-2 border-white/60"></div>
-          <div className="absolute bottom-4 left-4 w-6 h-6 border-l-2 border-b-2 border-white/60"></div>
-          <div className="absolute bottom-4 right-4 w-6 h-6 border-r-2 border-b-2 border-white/60"></div>
-
-          {/* Simulated subject/person outline */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-            <div className="w-16 h-24 border-2 border-dashed border-white/30 rounded-t-full"></div>
-          </div>
         </div>
 
         {/* Mobile Camera Record Button */}
