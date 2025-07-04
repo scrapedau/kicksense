@@ -270,7 +270,8 @@ export default function SessionDetails() {
               </TabsContent>
             )}
 
-            <TabsContent value="peaks" className="mt-6">
+            <TabsContent value="data" className="mt-6 space-y-6">
+              {/* Peak Performance Data Section */}
               <Card>
                 <CardHeader>
                   <CardTitle className="text-base flex items-center">
@@ -323,9 +324,8 @@ export default function SessionDetails() {
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
 
-            <TabsContent value="raw" className="mt-6">
+              {/* Raw Sensor Data Section */}
               <Card>
                 <CardHeader>
                   <CardTitle className="text-base flex items-center">
@@ -372,6 +372,34 @@ export default function SessionDetails() {
                         </tr>
                       </tbody>
                     </table>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="visualizer" className="mt-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base flex items-center">
+                    <Box className="w-4 h-4 mr-2" />
+                    3D Swing Path Visualizer
+                  </CardTitle>
+                  <CardDescription>
+                    Interactive 3D visualization of kick motion
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
+                    <div className="text-center">
+                      <Box className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                      <h3 className="font-medium text-foreground mb-2">
+                        3D Visualizer Coming Soon
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        Interactive 3D swing path visualization will be
+                        available here
+                      </p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
