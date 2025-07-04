@@ -218,7 +218,7 @@ export default function RawDataDisplay({
               {isRecording ? "Recording" : "Standby"}
             </span>
           </div>
-          <div className="text-muted-foreground">MetaMotionRL</div>
+          <div className="text-muted-foreground">kicksense</div>
         </div>
       </div>
     </div>
