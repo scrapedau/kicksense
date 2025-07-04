@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,59 +8,42 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { DataService } from "../data/dataService";
 
 const SetDetailsScreen = ({ navigation, route }) => {
   const { setId = 1 } = route.params || {};
   const [activeTab, setActiveTab] = useState("overview");
+  const [set, setSet] = useState(null);
+  const [peakData, setPeakData] = useState([]);
+  const [rawData, setRawData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Mock set data - in real app, this would be fetched based on setId
-  const set = {
-    id: setId,
-    date: "Dec 15, 2024",
-    time: "2:30 PM",
-    duration: "32 min",
-    kicks: 45,
-    peakSpeed: 72,
-    footSpeed: 68,
-    curvedLinearROM: 18.5,
-    angularROM: 145,
-    kickType: "field-goal",
-    hasVideo: true,
-    videoSize: "1.2 GB",
-  };
+  useEffect(() => {
+    const loadSetData = async () => {
+      try {
+        const [setData, peakPerformanceData, rawSensorData] = await Promise.all(
+          [
+            DataService.getSetById(setId),
+            DataService.getPeakPerformanceData(setId),
+            DataService.getRawSensorData(setId),
+          ],
+        );
 
-  // Mock data for demonstration
-  const peakFootSpeedData = [
-    { timestamp: "00:02", value: 68, rom: 18.2, angle: 142 },
-    { timestamp: "00:15", value: 71, rom: 19.1, angle: 145 },
-    {
-      timestamp: "00:28",
-      value: set.peakSpeed,
-      rom: set.curvedLinearROM,
-      angle: set.angularROM,
-    },
-    { timestamp: "00:45", value: 67, rom: 17.8, angle: 139 },
-    { timestamp: "01:02", value: 69, rom: 18.7, angle: 143 },
-  ];
+        setSet(setData);
+        setPeakData(peakPerformanceData);
+        setRawData(rawSensorData);
+      } catch (error) {
+        console.error("Failed to load set data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const rawDataSample = [
-    { time: "00:00.000", ax: 0.2, ay: -0.1, az: 9.8, gx: 12, gy: -5, gz: 8 },
-    { time: "00:00.100", ax: 0.3, ay: -0.2, az: 9.9, gx: 15, gy: -8, gz: 12 },
-    { time: "00:00.200", ax: 1.2, ay: 2.1, az: 11.2, gx: 45, gy: 32, gz: -18 },
-    { time: "00:00.300", ax: 4.5, ay: 8.2, az: 15.6, gx: 156, gy: 89, gz: -65 },
-    {
-      time: "00:00.400",
-      ax: 12.8,
-      ay: 15.4,
-      az: 22.1,
-      gx: 287,
-      gy: 145,
-      gz: -123,
-    },
-  ];
+    loadSetData();
+  }, [setId]);
 
   const getKickTypeIcon = () => {
-    switch (set.kickType) {
+    switch (set?.kickType) {
       case "field-goal":
         return "golf-outline";
       case "punt":
@@ -73,7 +56,7 @@ const SetDetailsScreen = ({ navigation, route }) => {
   };
 
   const getKickTypeColor = () => {
-    switch (set.kickType) {
+    switch (set?.kickType) {
       case "field-goal":
         return "#3B82F6";
       case "punt":
@@ -86,6 +69,7 @@ const SetDetailsScreen = ({ navigation, route }) => {
   };
 
   const formatKickType = () => {
+    if (!set) return "";
     return (
       set.kickType.charAt(0).toUpperCase() +
       set.kickType.slice(1).replace("-", " ")
@@ -94,17 +78,47 @@ const SetDetailsScreen = ({ navigation, route }) => {
 
   const tabs = [
     { key: "overview", label: "Overview" },
-    ...(set.hasVideo ? [{ key: "video", label: "Video" }] : []),
+    ...(set?.hasVideo ? [{ key: "video", label: "Video" }] : []),
     { key: "data", label: "Data" },
     { key: "visualizer", label: "3D" },
   ];
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Loading set details...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (!set) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.errorTitle}>Set Not Found</Text>
+          <Text style={styles.errorText}>
+            The requested set could not be found.
+          </Text>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons name="arrow-back" size={16} color="#25A18E" />
+            <Text style={styles.backButtonText}>Back to History</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity
-          style={styles.backButton}
+          style={styles.headerBackButton}
           onPress={() => navigation.goBack()}
         >
           <Ionicons name="arrow-back" size={24} color="#1E2D24" />
@@ -236,7 +250,7 @@ const SetDetailsScreen = ({ navigation, route }) => {
                 <Text style={styles.dataTitle}>Peak Performance Data</Text>
               </View>
               <View style={styles.peakDataList}>
-                {peakFootSpeedData.map((peak, index) => (
+                {peakData.map((peak, index) => (
                   <View key={index} style={styles.peakDataItem}>
                     <View style={styles.peakHeader}>
                       <Text style={styles.peakTimestamp}>{peak.timestamp}</Text>
@@ -275,24 +289,12 @@ const SetDetailsScreen = ({ navigation, route }) => {
                 Acceleration (m/s²) and Gyroscope (°/s) readings
               </Text>
               <View style={styles.rawDataTable}>
-                <View style={styles.tableHeader}>
-                  <Text style={styles.tableHeaderText}>Time</Text>
-                  <Text style={styles.tableHeaderText}>Acc X</Text>
-                  <Text style={styles.tableHeaderText}>Acc Y</Text>
-                  <Text style={styles.tableHeaderText}>Acc Z</Text>
-                  <Text style={styles.tableHeaderText}>Gyro X</Text>
-                  <Text style={styles.tableHeaderText}>Gyro Y</Text>
-                  <Text style={styles.tableHeaderText}>Gyro Z</Text>
-                </View>
-                {rawDataSample.map((row, index) => (
+                {rawData.slice(0, 5).map((row, index) => (
                   <View key={index} style={styles.tableRow}>
                     <Text style={styles.tableCellTime}>{row.time}</Text>
-                    <Text style={styles.tableCell}>{row.ax.toFixed(1)}</Text>
-                    <Text style={styles.tableCell}>{row.ay.toFixed(1)}</Text>
-                    <Text style={styles.tableCell}>{row.az.toFixed(1)}</Text>
-                    <Text style={styles.tableCell}>{row.gx}</Text>
-                    <Text style={styles.tableCell}>{row.gy}</Text>
-                    <Text style={styles.tableCell}>{row.gz}</Text>
+                    <Text style={styles.tableCell}>X: {row.ax.toFixed(1)}</Text>
+                    <Text style={styles.tableCell}>Y: {row.ay.toFixed(1)}</Text>
+                    <Text style={styles.tableCell}>Z: {row.az.toFixed(1)}</Text>
                   </View>
                 ))}
                 <View style={styles.tableFooter}>
@@ -339,6 +341,42 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F2EFE9",
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: "#BEB8A7",
+  },
+  errorTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#1E2D24",
+    marginBottom: 8,
+  },
+  errorText: {
+    fontSize: 14,
+    color: "#BEB8A7",
+    marginBottom: 16,
+    textAlign: "center",
+  },
+  backButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#E8F5E8",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  backButtonText: {
+    fontSize: 14,
+    color: "#25A18E",
+    fontWeight: "600",
+    marginLeft: 8,
+  },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -346,7 +384,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
   },
-  backButton: {
+  headerBackButton: {
     padding: 8,
   },
   headerInfo: {
@@ -590,20 +628,7 @@ const styles = StyleSheet.create({
   rawDataTable: {
     backgroundColor: "#F9F9F9",
     borderRadius: 8,
-  },
-  tableHeader: {
-    flexDirection: "row",
-    paddingVertical: 12,
-    paddingHorizontal: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E5E5E5",
-  },
-  tableHeaderText: {
-    flex: 1,
-    fontSize: 12,
-    fontWeight: "600",
-    color: "#1E2D24",
-    textAlign: "center",
+    padding: 8,
   },
   tableRow: {
     flexDirection: "row",
@@ -616,14 +641,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 12,
     color: "#1E2D24",
-    textAlign: "center",
     fontFamily: "monospace",
   },
   tableCell: {
     flex: 1,
     fontSize: 12,
     color: "#1E2D24",
-    textAlign: "center",
   },
   tableFooter: {
     paddingVertical: 16,
