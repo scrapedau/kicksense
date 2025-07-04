@@ -24,6 +24,7 @@ import BottomNavigation from "@/components/BottomNavigation";
 import { formatSpeed, formatDistance } from "@/lib/units";
 import { useState } from "react";
 import SessionViewer from "@/components/SessionViewer";
+import { cn } from "@/lib/utils";
 
 export default function History() {
   const [isMetric, setIsMetric] = useState(false); // TODO: Get from user preferences
@@ -266,7 +267,12 @@ export default function History() {
                   </div>
                 </div>
 
-                <div className="flex space-x-2">
+                <div
+                  className={cn(
+                    "flex gap-2",
+                    session.hasVideo ? "flex-col sm:flex-row" : "flex-row",
+                  )}
+                >
                   <Button
                     variant="outline"
                     size="sm"
