@@ -162,7 +162,7 @@ export default function SessionDetails() {
                 <TabsTrigger value="video">Video</TabsTrigger>
               )}
               <TabsTrigger value="data">Data</TabsTrigger>
-              <TabsTrigger value="visualizer">3D Visualizer</TabsTrigger>
+              <TabsTrigger value="visualizer">3D</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="mt-6 space-y-6">
