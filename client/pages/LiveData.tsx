@@ -98,7 +98,7 @@ export default function LiveData() {
       setSensorData([]);
       setCurrentFootSpeed(0);
       setPeakFootSpeed(0);
-      setSessionDuration(0);
+      setSetDuration(0);
       setAccelerationPeaks({ x: 0, y: 0, z: 0 });
     }
   };
