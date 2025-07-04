@@ -5,8 +5,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CalendarDays, TrendingUp, Target, Zap, ArrowUp } from "lucide-react";
+import {
+  CalendarDays,
+  TrendingUp,
+  Target,
+  Zap,
+  ArrowUp,
+  Video,
+  VideoOff,
+  Share2,
+  Download,
+  Eye,
+  Clock,
+} from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
 import { formatSpeed, formatDistance } from "@/lib/units";
 import { useState } from "react";
@@ -26,6 +39,8 @@ export default function History() {
       curvedLinearROM: 18.5,
       angularROM: 145,
       kickType: "field-goal" as const,
+      hasVideo: true,
+      videoSize: "1.2 GB",
     },
     {
       id: 2,
@@ -38,6 +53,7 @@ export default function History() {
       curvedLinearROM: 22.3,
       angularROM: 162,
       kickType: "punt" as const,
+      hasVideo: false,
     },
     {
       id: 3,
@@ -50,6 +66,35 @@ export default function History() {
       curvedLinearROM: 16.8,
       angularROM: 138,
       kickType: "kickoff" as const,
+      hasVideo: true,
+      videoSize: "1.8 GB",
+    },
+    {
+      id: 4,
+      date: "Dec 8, 2024",
+      time: "1:20 PM",
+      duration: "22 min",
+      kicks: 29,
+      peakSpeed: 66,
+      ballSpeed: 62,
+      curvedLinearROM: 20.1,
+      angularROM: 152,
+      kickType: "field-goal" as const,
+      hasVideo: false,
+    },
+    {
+      id: 5,
+      date: "Dec 5, 2024",
+      time: "3:15 PM",
+      duration: "30 min",
+      kicks: 41,
+      peakSpeed: 70,
+      ballSpeed: 67,
+      curvedLinearROM: 19.7,
+      angularROM: 148,
+      kickType: "punt" as const,
+      hasVideo: true,
+      videoSize: "1.5 GB",
     },
   ];
 
@@ -62,39 +107,45 @@ export default function History() {
             Session History
           </h1>
           <p className="text-muted-foreground">
-            Track your kicking performance over time
+            View and share your recorded training sessions
           </p>
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4 mb-6">
           <Card className="bg-primary/10 border-primary/30">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                  <CalendarDays className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-foreground">3</p>
-                  <p className="text-xs text-muted-foreground">
-                    Total Sessions
-                  </p>
-                </div>
+            <CardContent className="p-4 text-center">
+              <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <CalendarDays className="w-4 h-4 text-primary" />
               </div>
+              <p className="text-lg font-bold text-foreground">
+                {sessions.length}
+              </p>
+              <p className="text-xs text-muted-foreground">Total Sessions</p>
             </CardContent>
           </Card>
 
           <Card className="bg-secondary/10 border-secondary/30">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5 text-secondary" />
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-foreground">89%</p>
-                  <p className="text-xs text-muted-foreground">Avg Accuracy</p>
-                </div>
+            <CardContent className="p-4 text-center">
+              <div className="w-8 h-8 bg-secondary/20 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <Video className="w-4 h-4 text-secondary" />
               </div>
+              <p className="text-lg font-bold text-foreground">
+                {sessions.filter((s) => s.hasVideo).length}
+              </p>
+              <p className="text-xs text-muted-foreground">With Video</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-accent/10 border-accent/30">
+            <CardContent className="p-4 text-center">
+              <div className="w-8 h-8 bg-accent/20 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <VideoOff className="w-4 h-4 text-accent" />
+              </div>
+              <p className="text-lg font-bold text-foreground">
+                {sessions.filter((s) => !s.hasVideo).length}
+              </p>
+              <p className="text-xs text-muted-foreground">Data Only</p>
             </CardContent>
           </Card>
         </div>
@@ -106,14 +157,14 @@ export default function History() {
           </h2>
 
           {sessions.map((session) => (
-            <Card key={session.id} className="bg-card/50 border-border/50">
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div>
+            <Card key={session.id} className="border border-border shadow-sm">
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
-                      <CardTitle className="text-base text-foreground">
+                      <h3 className="text-sm font-medium text-foreground">
                         {session.date}
-                      </CardTitle>
+                      </h3>
                       <Badge
                         variant="outline"
                         className={
@@ -136,58 +187,98 @@ export default function History() {
                         {session.kickType.charAt(0).toUpperCase() +
                           session.kickType.slice(1).replace("-", " ")}
                       </Badge>
+                      <Badge
+                        variant={session.hasVideo ? "default" : "secondary"}
+                        className={
+                          session.hasVideo
+                            ? "bg-secondary/20 text-secondary border-secondary/30"
+                            : "bg-muted text-muted-foreground"
+                        }
+                      >
+                        {session.hasVideo ? (
+                          <>
+                            <Video className="w-3 h-3 mr-1" />
+                            Video
+                          </>
+                        ) : (
+                          <>
+                            <VideoOff className="w-3 h-3 mr-1" />
+                            Data Only
+                          </>
+                        )}
+                      </Badge>
                     </div>
-                    <CardDescription>
-                      {session.time} • {session.duration}
-                    </CardDescription>
+
+                    <div className="flex items-center space-x-4 text-xs text-muted-foreground">
+                      <span className="flex items-center">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {session.time}
+                      </span>
+                      <span>{session.duration}</span>
+                      <span>{session.kicks} kicks</span>
+                    </div>
+
+                    <div className="flex items-center mt-2">
+                      <Zap className="w-3 h-3 text-primary mr-1" />
+                      <span className="text-sm font-medium text-foreground">
+                        {formatSpeed(session.peakSpeed, isMetric)} peak
+                      </span>
+                      {session.hasVideo && session.videoSize && (
+                        <>
+                          <span className="mx-2 text-muted-foreground">•</span>
+                          <span className="text-xs text-muted-foreground">
+                            {session.videoSize}
+                          </span>
+                        </>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 mt-3 text-xs">
+                      <div>
+                        <span className="text-muted-foreground">
+                          Ball Speed:{" "}
+                        </span>
+                        <span className="font-medium">
+                          {formatSpeed(session.ballSpeed, isMetric)}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">
+                          Linear ROM:{" "}
+                        </span>
+                        <span className="font-medium">
+                          {formatDistance(session.curvedLinearROM, isMetric)}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">
+                          Angular ROM:{" "}
+                        </span>
+                        <span className="font-medium">
+                          {session.angularROM}°
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <Badge
-                    variant="secondary"
-                    className="bg-secondary/20 text-secondary"
-                  >
-                    {session.kicks} kicks
-                  </Badge>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground flex items-center">
-                        <Zap className="w-3 h-3 mr-1" />
-                        Peak Speed
-                      </span>
-                      <span className="text-sm font-medium text-foreground">
-                        {formatSpeed(session.peakSpeed, isMetric)}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">
-                        Curved Linear ROM
-                      </span>
-                      <span className="text-sm font-medium text-foreground">
-                        {formatDistance(session.curvedLinearROM, isMetric)}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">
-                        Ball Speed
-                      </span>
-                      <span className="text-sm font-medium text-foreground">
-                        {formatSpeed(session.ballSpeed, isMetric)}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">
-                        Angular ROM
-                      </span>
-                      <span className="text-sm font-medium text-foreground">
-                        {session.angularROM}°
-                      </span>
-                    </div>
-                  </div>
+
+                <div className="flex space-x-2">
+                  <Button variant="outline" size="sm" className="flex-1">
+                    <Eye className="w-4 h-4 mr-2" />
+                    View
+                  </Button>
+                  <Button variant="outline" size="sm" className="flex-1">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export
+                  </Button>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="flex-1 bg-primary text-primary-foreground"
+                  >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Share
+                  </Button>
                 </div>
               </CardContent>
             </Card>

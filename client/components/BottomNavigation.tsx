@@ -1,4 +1,4 @@
-import { Home, Activity, History, Settings, Share } from "lucide-react";
+import { Home, Activity, History, Settings } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
@@ -17,11 +17,6 @@ const navItems = [
     path: "/history",
     icon: History,
     label: "History",
-  },
-  {
-    path: "/share",
-    icon: Share,
-    label: "Share",
   },
   {
     path: "/settings",
