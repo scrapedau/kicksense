@@ -135,7 +135,7 @@ export default function SessionDetails() {
             </Button>
             <div>
               <h1 className="text-2xl font-bold text-foreground">
-                Session Details
+                Set Details
               </h1>
               <p className="text-muted-foreground">
                 {session.date} • {session.time}
