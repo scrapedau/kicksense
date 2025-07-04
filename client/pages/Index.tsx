@@ -12,9 +12,9 @@ import { Activity, Video, VideoOff, Target, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BluetoothIndicator from "@/components/BluetoothIndicator";
-import KickTypeSelector, { KickType } from "@/components/KickTypeSelector";
+import KickTypeSelector from "@/components/KickTypeSelector";
 import { formatSpeed, formatDistance } from "@/lib/units";
-import { PersonalBests, SetData } from "@/types";
+import { PersonalBests, SetData, KickType } from "@/types";
 import { DataService } from "@/services/dataService";
 
 export default function Index() {
