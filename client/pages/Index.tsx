@@ -19,14 +19,49 @@ import { DataService } from "@/services/dataService";
 
 export default function Index() {
   const [showKickTypeSelector, setShowKickTypeSelector] = useState(false);
+  const [personalBests, setPersonalBests] = useState<PersonalBests | null>(
+    null,
+  );
+  const [recentSets, setRecentSets] = useState<SetData[]>([]);
+  const [loading, setLoading] = useState(true);
   // App operates in Imperial units only
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [bests, recent] = await Promise.all([
+          DataService.getPersonalBests(),
+          DataService.getRecentSets(),
+        ]);
+        setPersonalBests(bests);
+        setRecentSets(recent);
+      } catch (error) {
+        console.error("Failed to load data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const handleKickTypeSelect = (kickType: KickType, withVideo: boolean) => {
     setShowKickTypeSelector(false);
     // Navigate to live data with kick type and video parameters
     navigate(`/live?video=${withVideo}&kickType=${kickType}`);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background pb-20">
