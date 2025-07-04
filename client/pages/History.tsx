@@ -267,35 +267,32 @@ export default function History() {
                   </div>
                 </div>
 
-                <div
-                  className={cn(
-                    "flex gap-2",
-                    session.hasVideo ? "flex-col sm:flex-row" : "flex-row",
-                  )}
-                >
+                <div className="space-y-2">
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex-1"
+                    className="w-full"
                     onClick={() => setSelectedSession(session)}
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     View
                   </Button>
-                  <Button variant="outline" size="sm" className="flex-1">
-                    <Download className="w-4 h-4 mr-2" />
-                    Export Data
-                  </Button>
-                  {session.hasVideo && (
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="flex-1 bg-secondary text-secondary-foreground"
-                    >
-                      <Video className="w-4 h-4 mr-2" />
-                      Export Video
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" className="flex-1">
+                      <Download className="w-4 h-4 mr-2" />
+                      Export Data
                     </Button>
-                  )}
+                    {session.hasVideo && (
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="flex-1 bg-secondary text-secondary-foreground"
+                      >
+                        <Video className="w-4 h-4 mr-2" />
+                        Save Video
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
