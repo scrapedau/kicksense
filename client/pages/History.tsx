@@ -236,10 +236,10 @@ export default function History() {
                     <div className="grid grid-cols-2 gap-4 mt-3 text-xs">
                       <div>
                         <span className="text-muted-foreground">
-                          Ball Speed:{" "}
+                          Foot Speed:{" "}
                         </span>
                         <span className="font-medium">
-                          {formatSpeed(session.ballSpeed, isMetric)}
+                          {formatSpeed(session.footSpeed, isMetric)}
                         </span>
                       </div>
                       <div>
