@@ -25,7 +25,7 @@ import {
 import { cn } from "@/lib/utils";
 import { formatSpeed, formatDistance } from "@/lib/units";
 
-interface SessionData {
+interface SetData {
   id: number;
   date: string;
   time: string;
