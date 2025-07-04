@@ -209,22 +209,22 @@ export default function History() {
                     <div className="flex items-center space-x-4 text-xs text-muted-foreground">
                       <span className="flex items-center">
                         <Clock className="w-3 h-3 mr-1" />
-                        {session.time}
+                        {set.time}
                       </span>
-                      <span>{session.duration}</span>
-                      <span>{session.kicks} kicks</span>
+                      <span>{set.duration}</span>
+                      <span>{set.kicks} kicks</span>
                     </div>
 
                     <div className="flex items-center mt-2">
                       <Zap className="w-3 h-3 text-primary mr-1" />
                       <span className="text-sm font-medium text-foreground">
-                        {session.peakSpeed.toFixed(1)} mph peak
+                        {set.peakSpeed.toFixed(1)} mph peak
                       </span>
-                      {session.hasVideo && session.videoSize && (
+                      {set.hasVideo && set.videoSize && (
                         <>
                           <span className="mx-2 text-muted-foreground">•</span>
                           <span className="text-xs text-muted-foreground">
-                            {session.videoSize}
+                            {set.videoSize}
                           </span>
                         </>
                       )}
@@ -236,7 +236,7 @@ export default function History() {
                           Foot Speed:{" "}
                         </span>
                         <span className="font-medium">
-                          {session.footSpeed.toFixed(1)} mph
+                          {set.footSpeed.toFixed(1)} mph
                         </span>
                       </div>
                       <div>
@@ -244,16 +244,14 @@ export default function History() {
                           Linear ROM:{" "}
                         </span>
                         <span className="font-medium">
-                          {session.curvedLinearROM.toFixed(1)} in
+                          {set.curvedLinearROM.toFixed(1)} in
                         </span>
                       </div>
                       <div>
                         <span className="text-muted-foreground">
                           Angular ROM:{" "}
                         </span>
-                        <span className="font-medium">
-                          {session.angularROM}°
-                        </span>
+                        <span className="font-medium">{set.angularROM}°</span>
                       </div>
                     </div>
                   </div>
