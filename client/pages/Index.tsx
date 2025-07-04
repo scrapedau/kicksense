@@ -20,8 +20,12 @@ export default function Index() {
         <div className="px-6 pt-8 pb-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">KickSense</h1>
-              <p className="text-muted-foreground">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2Faf267b38e7f649e5aba7b44dad4417a9%2Fc3a4084173bf4fd5ac0199efccbcbd48?format=webp&width=800"
+                alt="KickSense"
+                className="h-8 w-auto"
+              />
+              <p className="text-muted-foreground mt-1">
                 Football Kicking Analytics
               </p>
             </div>
@@ -41,7 +45,7 @@ export default function Index() {
                 Ready to analyze your kicking performance?
               </CardDescription>
             </CardHeader>
-            <CardContent className="text-center space-y-3">
+            <CardContent className="text-center space-y-4">
               <Link to="/live?video=true">
                 <Button
                   size="lg"
