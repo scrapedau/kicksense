@@ -157,177 +157,37 @@ export default function LiveData() {
             </div>
 
             {/* Compact Data Half - Bottom */}
-            <div className="flex-1 space-y-3 overflow-y-auto">
-              <Card>
-                <CardContent className="p-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <Button
-                        onClick={handleStartStop}
-                        size={isVideoMode ? "default" : "lg"}
-                        variant={isRecording ? "destructive" : "default"}
-                        className={isVideoMode ? "w-20" : "w-24"}
-                      >
-                        {isRecording ? (
-                          <>
-                            <Square className="w-4 h-4 mr-1" />
-                            Stop
-                          </>
-                        ) : (
-                          <>
-                            <Play className="w-4 h-4 mr-1" />
-                            Start
-                          </>
-                        )}
-                      </Button>
-
-                      <div className="text-center">
-                        <p
-                          className={cn(
-                            "font-mono font-bold text-foreground",
-                            isVideoMode ? "text-lg" : "text-2xl",
-                          )}
-                        >
-                          {formatTime(sessionDuration)}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Duration
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Real-time Metrics */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <Card className="bg-primary/10 border-primary/30">
-                  <CardContent
-                    className={cn(
-                      "flex items-center space-x-2",
-                      isVideoMode ? "p-3" : "p-4",
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        "bg-primary/20 rounded-lg flex items-center justify-center",
-                        isVideoMode ? "w-8 h-8" : "w-10 h-10",
-                      )}
-                    >
-                      <Zap
-                        className={cn(
-                          "text-primary",
-                          isVideoMode ? "w-4 h-4" : "w-5 h-5",
-                        )}
-                      />
-                    </div>
-                    <div>
-                      <p
-                        className={cn(
-                          "font-bold text-foreground",
-                          isVideoMode ? "text-lg" : "text-xl",
-                        )}
-                      >
-                        {currentFootSpeed.toFixed(1)}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Current (mph)
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-secondary/10 border-secondary/30">
-                  <CardContent
-                    className={cn(
-                      "flex items-center space-x-2",
-                      isVideoMode ? "p-3" : "p-4",
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        "bg-secondary/20 rounded-lg flex items-center justify-center",
-                        isVideoMode ? "w-8 h-8" : "w-10 h-10",
-                      )}
-                    >
-                      <Gauge
-                        className={cn(
-                          "text-secondary",
-                          isVideoMode ? "w-4 h-4" : "w-5 h-5",
-                        )}
-                      />
-                    </div>
-                    <div>
-                      <p
-                        className={cn(
-                          "font-bold text-foreground",
-                          isVideoMode ? "text-lg" : "text-xl",
-                        )}
-                      >
-                        {peakFootSpeed.toFixed(1)}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Peak (mph)
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
+            <div className="space-y-3">
+              {/* Recording Controls */}
+              <div className="flex items-center justify-center space-x-4 mb-4">
+                <Button
+                  onClick={handleStartStop}
+                  size="lg"
+                  variant={isRecording ? "destructive" : "default"}
+                  className="px-8"
+                >
+                  {isRecording ? (
+                    <>
+                      <Square className="w-4 h-4 mr-2" />
+                      Stop
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-4 h-4 mr-2" />
+                      Start
+                    </>
+                  )}
+                </Button>
               </div>
 
-              {/* Charts */}
-              <div className="space-y-3">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle
-                      className={cn(
-                        "text-foreground",
-                        isVideoMode ? "text-sm" : "text-base",
-                      )}
-                    >
-                      Acceleration Data
-                    </CardTitle>
-                    {!isVideoMode && (
-                      <CardDescription>
-                        Real-time 3-axis acceleration (m/s²)
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-                  <CardContent className={isVideoMode ? "p-3" : ""}>
-                    <Chart
-                      data={accelerationData}
-                      title=""
-                      type="acceleration"
-                      className="w-full"
-                    />
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle
-                      className={cn(
-                        "text-foreground",
-                        isVideoMode ? "text-sm" : "text-base",
-                      )}
-                    >
-                      Gyroscope Data
-                    </CardTitle>
-                    {!isVideoMode && (
-                      <CardDescription>
-                        Real-time 3-axis rotation (°/s)
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-                  <CardContent className={isVideoMode ? "p-3" : ""}>
-                    <Chart
-                      data={gyroscopeData}
-                      title=""
-                      type="gyroscope"
-                      className="w-full"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
+              {/* Compact Raw Data Display */}
+              <CompactDataDisplay
+                currentFootSpeed={currentFootSpeed}
+                peakFootSpeed={peakFootSpeed}
+                accelerationPeaks={accelerationPeaks}
+                sessionDuration={sessionDuration}
+                isRecording={isRecording}
+              />
             </div>
           </div>
         ) : (
