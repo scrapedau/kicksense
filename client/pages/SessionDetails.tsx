@@ -367,7 +367,7 @@ export default function SessionDetails() {
                             colSpan={7}
                             className="p-4 text-center text-muted-foreground"
                           >
-                            ... {session.kicks * 50} more data points
+                            ... {set.kicks * 50} more data points
                           </td>
                         </tr>
                       </tbody>
