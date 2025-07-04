@@ -150,15 +150,6 @@ export default function History() {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground flex items-center">
-                        <Target className="w-3 h-3 mr-1" />
-                        Accuracy
-                      </span>
-                      <span className="text-sm font-medium text-foreground">
-                        {session.accuracy}%
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground flex items-center">
                         <Zap className="w-3 h-3 mr-1" />
                         Peak Speed
                       </span>
@@ -174,14 +165,6 @@ export default function History() {
                       </span>
                       <span className="text-sm font-medium text-foreground">
                         {session.ballSpeed} mph
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">
-                        Contact Angle
-                      </span>
-                      <span className="text-sm font-medium text-foreground">
-                        {session.contactAngle}°
                       </span>
                     </div>
                   </div>
