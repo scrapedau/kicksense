@@ -353,7 +353,7 @@ export default function SessionDetails() {
                         </tr>
                       </thead>
                       <tbody>
-                        {rawDataSample.map((row, index) => (
+                        {rawData.map((row, index) => (
                           <tr key={index} className="border-b">
                             <td className="p-2 font-mono">{row.time}</td>
                             <td className="p-2">{row.ax.toFixed(1)}</td>
