@@ -94,7 +94,7 @@ export default function SessionDetails() {
   ];
 
   const getKickTypeIcon = () => {
-    switch (session.kickType) {
+    switch (set.kickType) {
       case "field-goal":
         return <Target className="w-4 h-4" />;
       case "punt":
