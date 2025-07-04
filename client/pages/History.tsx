@@ -142,7 +142,7 @@ export default function History() {
                 <VideoOff className="w-4 h-4 text-accent" />
               </div>
               <p className="text-lg font-bold text-foreground">
-                {sessions.filter((s) => !s.hasVideo).length}
+                {sets.filter((s) => !s.hasVideo).length}
               </p>
               <p className="text-xs text-muted-foreground">Data Only</p>
             </CardContent>
