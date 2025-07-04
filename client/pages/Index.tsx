@@ -7,9 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Activity, Zap, Target, TrendingUp } from "lucide-react";
+import { Activity, Video, VideoOff, Target, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
+import BluetoothIndicator from "@/components/BluetoothIndicator";
 
 export default function Index() {
   return (
@@ -24,17 +25,11 @@ export default function Index() {
                 Football Kicking Analytics
               </p>
             </div>
-            <Badge
-              variant="secondary"
-              className="bg-secondary/20 text-secondary border-secondary/30"
-            >
-              <div className="w-2 h-2 bg-secondary rounded-full mr-2 animate-pulse" />
-              Ready
-            </Badge>
+            <BluetoothIndicator />
           </div>
 
           {/* Hero Section */}
-          <Card className="bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20 border-primary/30 mb-6">
+          <Card className="bg-gradient-to-br from-primary/5 via-primary/5 to-secondary/5 border-primary/20 mb-6">
             <CardHeader className="text-center pb-2">
               <div className="mx-auto mb-4 w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
                 <Activity className="w-8 h-8 text-primary" />
@@ -46,14 +41,24 @@ export default function Index() {
                 Ready to analyze your kicking performance?
               </CardDescription>
             </CardHeader>
-            <CardContent className="text-center">
-              <Link to="/live">
+            <CardContent className="text-center space-y-3">
+              <Link to="/live?video=true">
                 <Button
                   size="lg"
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                 >
-                  <Zap className="w-5 h-5 mr-2" />
-                  Start Session
+                  <Video className="w-5 h-5 mr-2" />
+                  Record Data with Video
+                </Button>
+              </Link>
+              <Link to="/live?video=false">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full border-primary text-primary hover:bg-primary/10 font-semibold"
+                >
+                  <VideoOff className="w-5 h-5 mr-2" />
+                  Record Data without Video
                 </Button>
               </Link>
             </CardContent>
@@ -67,10 +72,10 @@ export default function Index() {
           </h2>
 
           <div className="grid grid-cols-2 gap-4">
-            <Card className="bg-card/50 border-border/50">
+            <Card className="border border-border shadow-sm">
               <CardContent className="p-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
                     <Target className="w-5 h-5 text-secondary" />
                   </div>
                   <div>
@@ -83,10 +88,10 @@ export default function Index() {
               </CardContent>
             </Card>
 
-            <Card className="bg-card/50 border-border/50">
+            <Card className="border border-border shadow-sm">
               <CardContent className="p-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
                     <TrendingUp className="w-5 h-5 text-accent" />
                   </div>
                   <div>
@@ -101,7 +106,7 @@ export default function Index() {
           </div>
 
           {/* Recent Session */}
-          <Card className="bg-card/50 border-border/50">
+          <Card className="border border-border shadow-sm">
             <CardHeader className="pb-3">
               <CardTitle className="text-base text-foreground">
                 Last Session
