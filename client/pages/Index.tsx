@@ -191,11 +191,11 @@ export default function Index() {
             </Card>
           </div>
 
-          {/* Session History */}
+          {/* Set History */}
           <Card className="border border-border shadow-sm">
             <CardHeader className="pb-3">
               <CardTitle className="text-base text-foreground">
-                Session History
+                Set History
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0 space-y-3">
