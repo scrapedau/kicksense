@@ -30,7 +30,7 @@ export default function History() {
   // App operates in Imperial units only
   const navigate = useNavigate();
 
-  const sessions = [
+  const sets = [
     {
       id: 1,
       date: "Dec 15, 2024",
