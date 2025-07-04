@@ -119,10 +119,8 @@ export default function History() {
               <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-2">
                 <CalendarDays className="w-4 h-4 text-primary" />
               </div>
-              <p className="text-lg font-bold text-foreground">
-                {sessions.length}
-              </p>
-              <p className="text-xs text-muted-foreground">Total Sessions</p>
+              <p className="text-lg font-bold text-foreground">{sets.length}</p>
+              <p className="text-xs text-muted-foreground">Total Sets</p>
             </CardContent>
           </Card>
 
