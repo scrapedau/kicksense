@@ -36,7 +36,7 @@ export default function LiveData() {
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
   const [currentFootSpeed, setCurrentFootSpeed] = useState(0);
   const [peakFootSpeed, setPeakFootSpeed] = useState(0);
-  const [sessionDuration, setSessionDuration] = useState(0);
+  const [setDuration, setSetDuration] = useState(0);
   const [accelerationPeaks, setAccelerationPeaks] = useState({
     x: 0,
     y: 0,
