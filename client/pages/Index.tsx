@@ -257,7 +257,10 @@ export default function Index() {
             </CardHeader>
             <CardContent className="pt-0 space-y-3">
               {recentSets.map((set) => (
-                <div key={set.id} className="flex justify-between items-center py-2">
+                <div
+                  key={set.id}
+                  className="flex justify-between items-center py-2"
+                >
                   <div>
                     <p className="text-sm font-medium text-foreground">
                       {set.date}
@@ -273,7 +276,7 @@ export default function Index() {
                     <p className="text-xs text-muted-foreground">Peak speed</p>
                   </div>
                 </div>
-              })}
+              ))}
             </CardContent>
           </Card>
         </div>
