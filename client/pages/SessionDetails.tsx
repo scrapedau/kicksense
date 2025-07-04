@@ -107,7 +107,7 @@ export default function SessionDetails() {
   };
 
   const getKickTypeColor = () => {
-    switch (session.kickType) {
+    switch (set.kickType) {
       case "field-goal":
         return "bg-primary/10 text-primary border-primary/30";
       case "punt":
