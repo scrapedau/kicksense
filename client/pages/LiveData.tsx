@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,8 +10,10 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Chart } from "@/components/ui/chart";
-import { Play, Pause, Square, Zap, Gauge } from "lucide-react";
+import { Play, Pause, Square, Zap, Gauge, Camera, Video } from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
+import CameraViewfinder from "@/components/CameraViewfinder";
+import { cn } from "@/lib/utils";
 
 interface SensorData {
   timestamp: number;
@@ -22,6 +25,10 @@ interface SensorData {
 }
 
 export default function LiveData() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const isVideoMode = searchParams.get("video") === "true";
+
   const [isRecording, setIsRecording] = useState(false);
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
   const [currentFootSpeed, setCurrentFootSpeed] = useState(0);
@@ -102,12 +109,15 @@ export default function LiveData() {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <div className="px-6 pt-8 pb-6">
+      <div className={cn("pt-8 pb-6", isVideoMode ? "px-4" : "px-6")}>
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-foreground">Live Data</h1>
-            <p className="text-muted-foreground">Real-time sensor tracking</p>
+            <p className="text-muted-foreground flex items-center">
+              {isVideoMode && <Video className="w-4 h-4 mr-1" />}
+              {isVideoMode ? "Video + Sensor Recording" : "Sensor Recording"}
+            </p>
           </div>
           <Badge
             variant={isRecording ? "default" : "secondary"}
@@ -121,131 +131,323 @@ export default function LiveData() {
           </Badge>
         </div>
 
-        {/* Recording Controls */}
-        <Card className="mb-6">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <Button
-                  onClick={handleStartStop}
-                  size="lg"
-                  variant={isRecording ? "destructive" : "default"}
-                  className="w-24"
-                >
-                  {isRecording ? (
-                    <>
-                      <Square className="w-4 h-4 mr-2" />
-                      Stop
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-4 h-4 mr-2" />
-                      Start
-                    </>
-                  )}
-                </Button>
+        {/* Split Screen Layout for Video Mode */}
+        {isVideoMode ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[calc(100vh-180px)]">
+            {/* Camera Side */}
+            <div className="order-2 lg:order-1">
+              <CameraViewfinder
+                isRecording={isRecording}
+                onRecordingChange={setIsRecording}
+              />
+            </div>
 
-                <div className="text-center">
-                  <p className="text-2xl font-mono font-bold text-foreground">
-                    {formatTime(sessionDuration)}
-                  </p>
-                  <p className="text-xs text-muted-foreground">Duration</p>
-                </div>
+            {/* Compressed Data Side */}
+            <div className="order-1 lg:order-2 space-y-4 overflow-y-auto">
+              <Card>
+                <CardContent className="p-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <Button
+                        onClick={handleStartStop}
+                        size={isVideoMode ? "default" : "lg"}
+                        variant={isRecording ? "destructive" : "default"}
+                        className={isVideoMode ? "w-20" : "w-24"}
+                      >
+                        {isRecording ? (
+                          <>
+                            <Square className="w-4 h-4 mr-1" />
+                            Stop
+                          </>
+                        ) : (
+                          <>
+                            <Play className="w-4 h-4 mr-1" />
+                            Start
+                          </>
+                        )}
+                      </Button>
+
+                      <div className="text-center">
+                        <p
+                          className={cn(
+                            "font-mono font-bold text-foreground",
+                            isVideoMode ? "text-lg" : "text-2xl",
+                          )}
+                        >
+                          {formatTime(sessionDuration)}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Duration
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Real-time Metrics */}
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <Card className="bg-primary/10 border-primary/30">
+                  <CardContent
+                    className={cn(
+                      "flex items-center space-x-2",
+                      isVideoMode ? "p-3" : "p-4",
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "bg-primary/20 rounded-lg flex items-center justify-center",
+                        isVideoMode ? "w-8 h-8" : "w-10 h-10",
+                      )}
+                    >
+                      <Zap
+                        className={cn(
+                          "text-primary",
+                          isVideoMode ? "w-4 h-4" : "w-5 h-5",
+                        )}
+                      />
+                    </div>
+                    <div>
+                      <p
+                        className={cn(
+                          "font-bold text-foreground",
+                          isVideoMode ? "text-lg" : "text-xl",
+                        )}
+                      >
+                        {currentFootSpeed.toFixed(1)}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Current (mph)
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-secondary/10 border-secondary/30">
+                  <CardContent
+                    className={cn(
+                      "flex items-center space-x-2",
+                      isVideoMode ? "p-3" : "p-4",
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "bg-secondary/20 rounded-lg flex items-center justify-center",
+                        isVideoMode ? "w-8 h-8" : "w-10 h-10",
+                      )}
+                    >
+                      <Gauge
+                        className={cn(
+                          "text-secondary",
+                          isVideoMode ? "w-4 h-4" : "w-5 h-5",
+                        )}
+                      />
+                    </div>
+                    <div>
+                      <p
+                        className={cn(
+                          "font-bold text-foreground",
+                          isVideoMode ? "text-lg" : "text-xl",
+                        )}
+                      >
+                        {peakFootSpeed.toFixed(1)}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Peak (mph)
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Charts */}
+              <div className="space-y-3">
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle
+                      className={cn(
+                        "text-foreground",
+                        isVideoMode ? "text-sm" : "text-base",
+                      )}
+                    >
+                      Acceleration Data
+                    </CardTitle>
+                    {!isVideoMode && (
+                      <CardDescription>
+                        Real-time 3-axis acceleration (m/s²)
+                      </CardDescription>
+                    )}
+                  </CardHeader>
+                  <CardContent className={isVideoMode ? "p-3" : ""}>
+                    <Chart
+                      data={accelerationData}
+                      title=""
+                      type="acceleration"
+                      className="w-full"
+                    />
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle
+                      className={cn(
+                        "text-foreground",
+                        isVideoMode ? "text-sm" : "text-base",
+                      )}
+                    >
+                      Gyroscope Data
+                    </CardTitle>
+                    {!isVideoMode && (
+                      <CardDescription>
+                        Real-time 3-axis rotation (°/s)
+                      </CardDescription>
+                    )}
+                  </CardHeader>
+                  <CardContent className={isVideoMode ? "p-3" : ""}>
+                    <Chart
+                      data={gyroscopeData}
+                      title=""
+                      type="gyroscope"
+                      className="w-full"
+                    />
+                  </CardContent>
+                </Card>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        ) : (
+          /* Full Screen Layout for Sensor-Only Mode */
+          <div>
+            {/* Recording Controls */}
+            <Card className="mb-6">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <Button
+                      onClick={handleStartStop}
+                      size="lg"
+                      variant={isRecording ? "destructive" : "default"}
+                      className="w-24"
+                    >
+                      {isRecording ? (
+                        <>
+                          <Square className="w-4 h-4 mr-2" />
+                          Stop
+                        </>
+                      ) : (
+                        <>
+                          <Play className="w-4 h-4 mr-2" />
+                          Start
+                        </>
+                      )}
+                    </Button>
 
-        {/* Real-time Metrics */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <Card className="bg-primary/10 border-primary/30">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-primary" />
+                    <div className="text-center">
+                      <p className="text-2xl font-mono font-bold text-foreground">
+                        {formatTime(sessionDuration)}
+                      </p>
+                      <p className="text-xs text-muted-foreground">Duration</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xl font-bold text-foreground">
-                    {currentFootSpeed.toFixed(1)}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    Current Speed (mph)
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
-          <Card className="bg-secondary/10 border-secondary/30">
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
-                  <Gauge className="w-5 h-5 text-secondary" />
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-foreground">
-                    {peakFootSpeed.toFixed(1)}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    Peak Speed (mph)
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+            {/* Real-time Metrics */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <Card className="bg-primary/10 border-primary/30">
+                <CardContent className="p-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+                      <Zap className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-xl font-bold text-foreground">
+                        {currentFootSpeed.toFixed(1)}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Current Speed (mph)
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-        {/* Charts */}
-        <div className="space-y-4">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base">Acceleration Data</CardTitle>
-              <CardDescription>
-                Real-time 3-axis acceleration (m/s²)
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Chart
-                data={accelerationData}
-                title=""
-                type="acceleration"
-                className="w-full"
-              />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base">Gyroscope Data</CardTitle>
-              <CardDescription>Real-time 3-axis rotation (°/s)</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Chart
-                data={gyroscopeData}
-                title=""
-                type="gyroscope"
-                className="w-full"
-              />
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Swing Path Preview */}
-        <Card className="mt-4">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">Swing Path Preview</CardTitle>
-            <CardDescription>Foot movement trajectory</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="w-full h-32 bg-muted rounded-lg flex items-center justify-center">
-              <p className="text-muted-foreground text-sm">
-                {isRecording
-                  ? "Tracking movement..."
-                  : "Start recording to see swing path"}
-              </p>
+              <Card className="bg-secondary/10 border-secondary/30">
+                <CardContent className="p-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
+                      <Gauge className="w-5 h-5 text-secondary" />
+                    </div>
+                    <div>
+                      <p className="text-xl font-bold text-foreground">
+                        {peakFootSpeed.toFixed(1)}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Peak Speed (mph)
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-          </CardContent>
-        </Card>
+
+            {/* Charts */}
+            <div className="space-y-4">
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base">Acceleration Data</CardTitle>
+                  <CardDescription>
+                    Real-time 3-axis acceleration (m/s²)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Chart
+                    data={accelerationData}
+                    title=""
+                    type="acceleration"
+                    className="w-full"
+                  />
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base">Gyroscope Data</CardTitle>
+                  <CardDescription>
+                    Real-time 3-axis rotation (°/s)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Chart
+                    data={gyroscopeData}
+                    title=""
+                    type="gyroscope"
+                    className="w-full"
+                  />
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Swing Path Preview */}
+            <Card className="mt-4">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base">Swing Path Preview</CardTitle>
+                <CardDescription>Foot movement trajectory</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="w-full h-32 bg-muted rounded-lg flex items-center justify-center">
+                  <p className="text-muted-foreground text-sm">
+                    {isRecording
+                      ? "Tracking movement..."
+                      : "Start recording to see swing path"}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
 
       <BottomNavigation />
