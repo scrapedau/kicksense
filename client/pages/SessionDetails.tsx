@@ -205,7 +205,7 @@ export default function SessionDetails() {
                       Average Foot Speed:
                     </span>
                     <span className="font-medium">
-                      {session.footSpeed.toFixed(1)} mph
+                      {set.footSpeed.toFixed(1)} mph
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -213,7 +213,7 @@ export default function SessionDetails() {
                       Peak Foot Speed:
                     </span>
                     <span className="font-medium">
-                      {session.peakSpeed.toFixed(1)} mph
+                      {set.peakSpeed.toFixed(1)} mph
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -221,14 +221,14 @@ export default function SessionDetails() {
                       Max Linear ROM:
                     </span>
                     <span className="font-medium">
-                      {session.curvedLinearROM.toFixed(1)} in
+                      {set.curvedLinearROM.toFixed(1)} in
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">
                       Max Angular ROM:
                     </span>
-                    <span className="font-medium">{session.angularROM}°</span>
+                    <span className="font-medium">{set.angularROM}°</span>
                   </div>
                 </CardContent>
               </Card>
