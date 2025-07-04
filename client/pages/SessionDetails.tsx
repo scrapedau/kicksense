@@ -283,7 +283,7 @@ export default function SessionDetails() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {peakFootSpeedData.map((peak, index) => (
+                    {peakData.map((peak, index) => (
                       <div key={index} className="p-4 bg-muted/50 rounded-lg">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center space-x-3">
