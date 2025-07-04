@@ -24,21 +24,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatSpeed, formatDistance } from "@/lib/units";
-
-interface SetData {
-  id: number;
-  date: string;
-  time: string;
-  duration: string;
-  kicks: number;
-  peakSpeed: number;
-  footSpeed: number;
-  curvedLinearROM: number;
-  angularROM: number;
-  kickType: "field-goal" | "punt" | "kickoff";
-  hasVideo: boolean;
-  videoSize?: string;
-}
+import { SetData, PeakPerformanceData, RawSensorData } from "@/types";
+import { DataService } from "@/services/dataService";
 
 export default function SessionDetails() {
   const { sessionId } = useParams();
