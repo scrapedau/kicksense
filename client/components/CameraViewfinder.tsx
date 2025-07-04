@@ -70,29 +70,53 @@ export default function CameraViewfinder({
           </div>
         </div>
 
-        {/* Camera Preview */}
-        <div className="flex-1 bg-muted rounded-lg overflow-hidden relative">
-          {hasPermission ? (
-            <video
-              ref={videoRef}
-              autoPlay
-              playsInline
-              muted
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-center">
-                <VideoOff className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">
-                  Camera access required
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Please allow camera permissions
-                </p>
+        {/* Simulated Mobile Phone Viewfinder */}
+        <div className="flex-1 bg-black rounded-lg overflow-hidden relative">
+          {/* Simulated camera viewfinder with crosshairs and overlay */}
+          <div className="w-full h-full relative bg-gradient-to-br from-gray-800 via-gray-900 to-black">
+            {/* Grid overlay */}
+            <div className="absolute inset-0">
+              <svg className="w-full h-full opacity-30" viewBox="0 0 100 100">
+                <defs>
+                  <pattern
+                    id="grid"
+                    width="20"
+                    height="20"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <path
+                      d="M 20 0 L 0 0 0 20"
+                      fill="none"
+                      stroke="rgba(255,255,255,0.2)"
+                      strokeWidth="0.5"
+                    />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+              </svg>
+            </div>
+
+            {/* Center crosshair */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative">
+                <div className="w-8 h-8 border-2 border-white/50 rounded-full"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-1 h-1 bg-white/80 rounded-full"></div>
+                </div>
               </div>
             </div>
-          )}
+
+            {/* Corner frame indicators */}
+            <div className="absolute top-4 left-4 w-6 h-6 border-l-2 border-t-2 border-white/60"></div>
+            <div className="absolute top-4 right-4 w-6 h-6 border-r-2 border-t-2 border-white/60"></div>
+            <div className="absolute bottom-4 left-4 w-6 h-6 border-l-2 border-b-2 border-white/60"></div>
+            <div className="absolute bottom-4 right-4 w-6 h-6 border-r-2 border-b-2 border-white/60"></div>
+
+            {/* Simulated subject/person outline */}
+            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+              <div className="w-16 h-24 border-2 border-dashed border-white/30 rounded-t-full"></div>
+            </div>
+          </div>
 
           {/* Recording indicator overlay */}
           {isVideoRecording && (

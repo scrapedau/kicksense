@@ -13,6 +13,7 @@ import { Chart } from "@/components/ui/chart";
 import { Play, Pause, Square, Zap, Gauge, Camera, Video } from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
 import CameraViewfinder from "@/components/CameraViewfinder";
+import CompactDataDisplay from "@/components/CompactDataDisplay";
 import { cn } from "@/lib/utils";
 
 interface SensorData {
@@ -34,6 +35,11 @@ export default function LiveData() {
   const [currentFootSpeed, setCurrentFootSpeed] = useState(0);
   const [peakFootSpeed, setPeakFootSpeed] = useState(0);
   const [sessionDuration, setSessionDuration] = useState(0);
+  const [accelerationPeaks, setAccelerationPeaks] = useState({
+    x: 0,
+    y: 0,
+    z: 0,
+  });
 
   // Simulate real-time sensor data
   useEffect(() => {
@@ -59,6 +65,13 @@ export default function LiveData() {
       setSensorData((prev) => [...prev.slice(-49), newData]);
       setCurrentFootSpeed(newData.footSpeed);
       setPeakFootSpeed((prev) => Math.max(prev, newData.footSpeed));
+
+      // Update acceleration peaks
+      setAccelerationPeaks((prev) => ({
+        x: Math.max(prev.x, Math.abs(newData.acceleration.x)),
+        y: Math.max(prev.y, Math.abs(newData.acceleration.y)),
+        z: Math.max(prev.z, Math.abs(newData.acceleration.z)),
+      }));
     }, 100);
 
     return () => clearInterval(interval);
@@ -84,6 +97,7 @@ export default function LiveData() {
       setCurrentFootSpeed(0);
       setPeakFootSpeed(0);
       setSessionDuration(0);
+      setAccelerationPeaks({ x: 0, y: 0, z: 0 });
     }
   };
 
@@ -131,19 +145,19 @@ export default function LiveData() {
           </Badge>
         </div>
 
-        {/* Split Screen Layout for Video Mode */}
+        {/* Mobile-First Layout for Video Mode */}
         {isVideoMode ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[calc(100vh-180px)]">
-            {/* Camera Side */}
-            <div className="order-2 lg:order-1">
+          <div className="flex flex-col h-[calc(100vh-180px)]">
+            {/* Camera Half - Top */}
+            <div className="h-1/2 mb-4">
               <CameraViewfinder
                 isRecording={isRecording}
                 onRecordingChange={setIsRecording}
               />
             </div>
 
-            {/* Compressed Data Side */}
-            <div className="order-1 lg:order-2 space-y-4 overflow-y-auto">
+            {/* Compact Data Half - Bottom */}
+            <div className="flex-1 space-y-3 overflow-y-auto">
               <Card>
                 <CardContent className="p-3">
                   <div className="flex items-center justify-between">
