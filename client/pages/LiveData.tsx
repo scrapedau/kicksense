@@ -29,6 +29,9 @@ export default function LiveData() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const isVideoMode = searchParams.get("video") === "true";
+  const kickType =
+    (searchParams.get("kickType") as "punt" | "kickoff" | "field-goal") ||
+    "field-goal";
 
   const [isRecording, setIsRecording] = useState(false);
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
