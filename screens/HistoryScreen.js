@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,51 +8,26 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { DataService } from "../data/dataService";
 
 const HistoryScreen = ({ navigation }) => {
-  const sets = [
-    {
-      id: 1,
-      date: "Dec 15, 2024",
-      time: "2:30 PM",
-      duration: "32 min",
-      kicks: 45,
-      peakSpeed: 72.1,
-      footSpeed: 68.5,
-      curvedLinearROM: 18.5,
-      angularROM: 145,
-      kickType: "field-goal",
-      hasVideo: true,
-      videoSize: "1.2 GB",
-    },
-    {
-      id: 2,
-      date: "Dec 14, 2024",
-      time: "4:15 PM",
-      duration: "28 min",
-      kicks: 38,
-      peakSpeed: 69.8,
-      footSpeed: 65.2,
-      curvedLinearROM: 17.2,
-      angularROM: 142,
-      kickType: "punt",
-      hasVideo: false,
-    },
-    {
-      id: 3,
-      date: "Dec 12, 2024",
-      time: "1:45 PM",
-      duration: "35 min",
-      kicks: 52,
-      peakSpeed: 74.3,
-      footSpeed: 70.1,
-      curvedLinearROM: 19.8,
-      angularROM: 148,
-      kickType: "kickoff",
-      hasVideo: true,
-      videoSize: "1.4 GB",
-    },
-  ];
+  const [sets, setSets] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadSets = async () => {
+      try {
+        const allSets = await DataService.getAllSets();
+        setSets(allSets);
+      } catch (error) {
+        console.error("Failed to load sets:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSets();
+  }, []);
 
   const getKickTypeIcon = (kickType) => {
     switch (kickType) {
@@ -85,6 +60,16 @@ const HistoryScreen = ({ navigation }) => {
       kickType.charAt(0).toUpperCase() + kickType.slice(1).replace("-", " ")
     );
   };
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Loading sets...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -271,6 +256,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F2EFE9",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    fontSize: 16,
+    color: "#BEB8A7",
   },
   scrollView: {
     flex: 1,
