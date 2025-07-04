@@ -130,7 +130,7 @@ export default function History() {
                 <Video className="w-4 h-4 text-secondary" />
               </div>
               <p className="text-lg font-bold text-foreground">
-                {sessions.filter((s) => s.hasVideo).length}
+                {sets.filter((s) => s.hasVideo).length}
               </p>
               <p className="text-xs text-muted-foreground">With Video</p>
             </CardContent>
